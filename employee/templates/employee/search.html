@@ -1,0 +1,55 @@
+{% extends 'employer/base.html' %}
+{% load static %}
+{% load filter_tags %}
+
+{% block content %}
+
+
+  <!-- Container for BradCrumbs-->
+
+  <div class="container ">
+    <nav aria-label="breadcrumb ">
+      <ol class="breadcrumb alert alert-success">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">search/</li>
+      </ol>
+    </nav>
+  </div>
+
+  <!-- Content Name -->
+  <div class="container mb-lg-4 mt-lg-4">
+    <h2>Vacancy Search</h2>
+    <hr>
+    {#    <h3>Hello {{ request.user }}</h3>#}
+  </div>
+
+  <!-- TabBar -->
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employee:employee' %}">Dash</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">MSG</a>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- Container for Vacancies Table-->
+  <div class="container">
+    <div class="col-12 mb-3">
+      {% if jobs %}
+        {% include "employee/includes/inc_vacancy_table.html" %}
+      {% else %}
+        <p class="no-books text-primary">Nothing To Search.</p>
+      {% endif %}
+    </div>
+
+  </div>
+  <!-- End Container for Vacancies -->
+
+{% endblock %}

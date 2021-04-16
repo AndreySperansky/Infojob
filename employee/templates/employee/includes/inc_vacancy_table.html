@@ -1,39 +1,36 @@
-<table id="books-table" class="table">
+<table id="job-table" class="table">
   <thead>
   <tr>
     <th class="text-center" scope="col">#</th>
     <th class="text-center" scope="col">Position</th>
-    <th class="text-center" scope="col">Compensation (€)</th>
-    <th class="text-center" scope="col">First Name</th>
-    <th class="text-center" scope="col">Family Name</th>
-    <th class="text-center" scope="col">Gender/th>
+    <th class="text-center" scope="col">Company</th>
+    <th class="text-center" scope="col">Comp. (€)</th>
     <th class="text-center" scope="col">City</th>
-    <th class="text-center" scope="col">Birthday</th>
-    <th class="text-center" scope="col">Read / Update / Delete</th>
+    <th class="text-center" scope="col">Created</th>
+    <th class="text-center" scope="col">Read / Response / Bookmark</th>
   </tr>
   </thead>
   <tbody>
-  {% for cv in cvs %}
+  {% for job in jobs %}
     <tr>
       <th class="text-center" scope="row">{{ forloop.counter }}</th>
-      <td class="text-center">{{ cv.position_seek }}</td>
-      <td class="text-center">{{ cv.first_name }}</td>
-      <td class="text-center">{{ cv.family_name }}</td>
-      <td class="text-center">{{ cv.gender }}</td>
-      <td class="text-center">{{ cv.city }}</td>
-      <td class="text-center">{{ cv.birthday }}</td>
+      <td class="text-center">{{ job.position }}</td>
+      <td class="text-center">{{ job.company }}</td>
+      <td class="text-center">{{ job.compensation }}</td>
+      <td class="text-center">{{ job.city }}</td>
+      <td class="text-center">{{ job.created_at }}</td>
       <td class="text-center">
         <!-- Read buttons -->
-        <button type="button" class="bs-modal read-book btn btn-sm btn-primary" data-form-url="{% url '#' cv.pk %}">
+        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employee:job_read' job.pk %}">
           <span class="fa fa-eye"></span>
         </button>
-        <!-- Update buttons -->
-        <button type="button" class="update-book btn btn-sm btn-primary" data-form-url="{% url '#' cv.pk %}">
-          <span class="fa fa-pencil"></span>
+        <!-- Response buttons -->
+        <button type="button" class="response-cv btn btn-sm btn-outline-success" data-form-url="{% url 'employee:job_response' job.pk %}">
+          <i class="fas fa-share-square"></i>
         </button>
-        <!-- Delete buttons -->
-        <button type="button" class="bs-modal delete-book btn btn-sm btn-danger" data-form-url="{% url '#' cv.pk %}">
-          <span class="fa fa-trash"></span>
+        <!-- Bookmark buttons -->
+        <button type="button" class="bs-modal delete-cv btn btn-sm btn-outline-danger" data-form-url="{% url 'employee:job_bookmark' job.pk %}">
+          <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
         </button>
       </td>
     </tr>

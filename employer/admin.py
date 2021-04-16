@@ -5,11 +5,11 @@ from .models import Vacancy, Company
 
 class CompanyAdmin(admin.ModelAdmin):
     # какие поля будут отображаться в админке
-    list_display = ('id', 'company_name', 'industry_name', 'email', 'is_active', 'created_at')
+    list_display = ('id', 'user', 'company_name', 'industry_name', 'email', 'is_active', 'created_at')
     # какие поля будут ссылками на соответствующие модели
-    list_display_links = ('id', 'company_name')
+    list_display_links = ('id', 'user', 'company_name')
     # какие поля будут участвовать в поиске
-    search_fields = ('company_name', 'industry_name')
+    search_fields = ('user','company_name', 'industry_name')
 
 
 

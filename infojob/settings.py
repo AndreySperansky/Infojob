@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'msgapp.apps.MsgappConfig',
     'crispy_forms',
     'dynamic_formsets',
+    'bootstrap_modal_forms',
 ]
 
 MIDDLEWARE = [

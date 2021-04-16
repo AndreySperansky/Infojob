@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, ListView, View, FormView
 from django.views.generic.detail import DetailView
 # from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -24,6 +24,7 @@ class HomepageView(TemplateView):
         context['company'] = Company.objects.order_by('id')
         context['vacancy'] = Vacancy.objects.order_by('id')
         return context
+
 
 
 #############################################################################################
@@ -135,7 +136,19 @@ class CvFilterView(FormView):
 
 
 
-def cv_favorites(request):
+class SearchView(ListView):
+    model = CV
+    context_object_name = 'cvs'
+    template_name = "employer/search.html"
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'type' in self.request.GET:
+            qs = qs.filter(cv_type=int(self.request.GET['type']))
+        return qs
+
+
+def cvs(request):
     data = dict()
     if request.method == 'GET':
         cvs = CV.objects.all()
@@ -145,3 +158,13 @@ def cv_favorites(request):
             request=request
         )
         return JsonResponse(data)
+
+
+class CvBookmarkView(View):
+    pass
+
+class CvResponseView(View):
+    pass
+
+class CvReadView(View):
+    pass

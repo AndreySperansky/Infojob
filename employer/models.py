@@ -10,7 +10,12 @@ class Company(models.Model):
         verbose_name_plural = 'Компании'
         ordering = ['company_name']
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='company')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='company',
+        verbose_name='создатель'
+    )
     #dash = request.user.company.all()  для доступа ко всем компаниям пользователя
     company_name = models.CharField(max_length=150, verbose_name='Наименование')
     industry_name = models.CharField(max_length=150, verbose_name='индустрия')

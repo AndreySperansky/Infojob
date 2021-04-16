@@ -1,9 +1,12 @@
 from django import forms
-from .models import CV, JobExp
+
 from django.forms.models import inlineformset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Fieldset, Div, Row, HTML, ButtonHolder, Submit, Column
 from .custom_layout_object import Formset
+from django import forms
+from .models import CV, JobExp
+from employer.models import Vacancy
 
 import re
 
@@ -58,7 +61,7 @@ class CollectionForm(forms.ModelForm):
 
     class Meta:
         model = CV
-        exclude = ['created_by' ]
+        exclude = ['user']
 
     def __init__(self, *args, **kwargs):
         super(CollectionForm, self).__init__(*args, **kwargs)
@@ -87,3 +90,10 @@ class CollectionForm(forms.ModelForm):
                 ButtonHolder(Submit('submit', 'Save')),
             )
         )
+
+
+class VacancyFilterForm(forms.ModelForm):
+
+    class Meta:
+        model = Vacancy
+        fields = ['position', 'compensation']

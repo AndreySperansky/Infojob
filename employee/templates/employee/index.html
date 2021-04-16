@@ -1,4 +1,5 @@
 {% extends 'employee/base.html' %}
+{% load filter_tags %}
 {% load static %}
 
 {% block content %}
@@ -25,6 +26,21 @@
       </div>
     </div>
 
+  <!-- Tabbar -->
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'employee:employee' %}">Dash</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employee:vacancies' %}">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">MSG</a>
+      </li>
+    </ul>
+
+
     <!-- My resumes card -->
     <div class="card my-lg-3">
       <div class="card-header">
@@ -33,7 +49,7 @@
       </div>
       <div class="card-body">
         {% if cv %}
-          {% for object in cv %}
+          {% for object in cv|in_user_category:user %}
             <li>
               <a href="{% url 'employee:cv_detail' pk=object.pk %}">Resume ID {{ object }}</a>
             </li>
