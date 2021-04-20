@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Vacancy, Company
+from .models import Vacancy, Company, BookmarkVacancy
 
 
 class CompanyAdmin(admin.ModelAdmin):
@@ -24,6 +24,19 @@ class VacancyAdmin(admin.ModelAdmin):
 
 
 
+class BookmarkVacancyAdmin(admin.ModelAdmin):
+    # какие поля будут отображаться в админке
+    list_display = ('id', 'vacancy', 'employee',)
+    # какие поля будут ссылками на соответствующие модели
+    list_display_links = ('id', 'vacancy', 'employee',)
+    # какие поля будут участвовать в поиске
+    search_fields = ('vacancy', 'employee',)
+
+
 
 admin.site.register(Company, CompanyAdmin)
 admin.site.register(Vacancy, VacancyAdmin)
+admin.site.register(BookmarkVacancy, BookmarkVacancyAdmin)
+
+
+

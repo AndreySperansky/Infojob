@@ -110,7 +110,7 @@ class CollectionDelete(DeleteView):
 
 
 ##########################################################################
-#                           Vacancy Search views                             #
+#                           Vacancy Search views                         #
 ##########################################################################
 
 
@@ -128,7 +128,7 @@ class JobFilterView(FormView):
         return response
 
     def get_success_url(self):
-        return reverse_lazy('employer:employer') + self.filter   # Add URL!!!
+        return reverse_lazy('employee:job_list') + self.filter   # Add URL!!!
 
 
 
@@ -140,7 +140,7 @@ class SearchView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         if 'type' in self.request.GET:
-            qs = qs.filter(cv_type=int(self.request.GET['type']))
+            qs = qs.filter(job_type=int(self.request.GET['type']))
         return qs
 
 
@@ -156,8 +156,32 @@ def vacancies(request):
         return JsonResponse(data)
 
 
-class JobBookmarkView(View):
-    pass
+##########################################################################
+#                           Vacancy Search views                         #
+##########################################################################
+
+class JobBookmarkView(ListView):
+    model = Vacancy
+    context_object_name = 'bookmarks'
+    template_name = "employee/search.html"
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'type' in self.request.GET:
+            qs = qs.filter(job_type=int(self.request.GET['type']))
+        return qs
+
+
+def job_bookmarks(request):
+    data = dict()
+    if request.method == 'GET':
+        bookmarks = Vacancy.objects.all()
+        data['table'] = render_to_string(
+            'employee/includes/inc_bookmarks_table.html',
+            {'bookmarks': bookmarks},
+            request=request
+        )
+        return JsonResponse(data)
 
 class JobResponseView(View):
     pass

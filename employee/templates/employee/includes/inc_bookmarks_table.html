@@ -1,0 +1,39 @@
+<table id="job-table" class="table">
+  <thead>
+  <tr>
+    <th class="text-center" scope="col">#</th>
+    <th class="text-center" scope="col">Position</th>
+    <th class="text-center" scope="col">Company</th>
+    <th class="text-center" scope="col">Comp. (€)</th>
+    <th class="text-center" scope="col">City</th>
+    <th class="text-center" scope="col">Created</th>
+    <th class="text-center" scope="col">Read / Response / Bookmark</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for job in jobs %}
+    <tr>
+      <th class="text-center" scope="row">{{ forloop.counter }}</th>
+      <td class="text-center">{{ job.position }}</td>
+      <td class="text-center">{{ job.company }}</td>
+      <td class="text-center">{{ job.compensation }}</td>
+      <td class="text-center">{{ job.city }}</td>
+      <td class="text-center">{{ job.created_at }}</td>
+      <td class="text-center">
+        <!-- Read buttons -->
+        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employee:job_read' job.pk %}">
+          <span class="fa fa-eye"></span>
+        </button>
+        <!-- Response buttons -->
+        <button type="button" class="response-cv btn btn-sm btn-outline-success" data-form-url="{% url 'employee:job_response' job.pk %}">
+          <i class="fas fa-share-square"></i>
+        </button>
+        <!-- Bookmark buttons -->
+        <button type="button" class="bs-modal delete-cv btn btn-sm btn-outline-danger" data-form-url="{% url 'employee:job_bookmark' job.pk %}">
+          <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
+        </button>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

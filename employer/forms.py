@@ -5,4 +5,4 @@ class CVFilterForm(forms.ModelForm):
 
     class Meta:
         model = CV
-        fields = ['position_seek', 'compensation_seek']
+        fields = ['position_seek']

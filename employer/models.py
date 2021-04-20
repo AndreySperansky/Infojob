@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from employee.models import CV
 
 
 
@@ -32,6 +33,9 @@ class Company(models.Model):
 
     @property
     def related_company(self):
+        '''
+        Filter up companies off users
+        '''
         _companies = Company.objects.filter(user=self.user)
         return _companies
 
@@ -48,7 +52,18 @@ class Vacancy(models.Model):
     is_checked = models.BooleanField(default=True, verbose_name='проверено')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='создано')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='обновлено')
-    # employee = models.ManyToManyField(settings.AUTH_USER_MODEL, through='EmployeeVacancyRelation', related_name='look_for')
+    employee_bookmarked = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='BookmarkVacancy',
+        related_name='bookmark_holder',
+        verbose_name='владелец закладки',
+    )
+    response = models.ManyToManyField(
+        CV,
+        through='Response',
+        related_name='vacancy_cv',
+        verbose_name='резюме',
+    )
 
 
 
@@ -61,3 +76,39 @@ class Vacancy(models.Model):
         ordering = ['position', '-compensation']
 
 
+
+class BookmarkVacancy(models.Model):
+    employee = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='employee_concern',
+        verbose_name='Соискатель')
+    vacancy = models.ForeignKey(
+        Vacancy,
+        on_delete=models.CASCADE,
+        related_name='bookmarked_vacancy',
+        verbose_name='Вакансия')
+    # in_bookmarks = models.BooleanField(default=False)
+
+
+    def __str__(self):
+        return f'{self.vacancy.position}, {self.vacancy.compensation}, {self.vacancy.company}'
+
+
+    class Meta:
+        verbose_name = 'Избранные вакансии'
+        verbose_name_plural = 'Избранные вакансии'
+        ordering = ['vacancy']
+
+
+class Response(models.Model):
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name='fk_cv',
+        verbose_name='Резюме')
+    vacancy = models.ForeignKey(
+        Vacancy,
+        on_delete=models.CASCADE,
+        related_name='fk_vacancy',
+        verbose_name='Вакансия')

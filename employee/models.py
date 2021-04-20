@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 
 
+
 class CV(models.Model):
     M = 'MALE'
     F = 'FEMALE'
@@ -10,9 +11,9 @@ class CV(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='cv',
+        related_name='cv_creator',
         verbose_name='создатель')
-    # dash = request.created_by.cv.all()  для доступа ко всем резюме пользователя
+    # dash = request.user.cv_creator.all()  для доступа ко всем резюме пользователя
     user_pic = models.ImageField(upload_to='users/%Y/%m/%d/', verbose_name='Фото', blank=True)
     position_seek = models.CharField(max_length=250, verbose_name='желаемая должность')
     compensation_seek = models.PositiveIntegerField(verbose_name='желаемая зарплата')
@@ -26,7 +27,13 @@ class CV(models.Model):
     profession = models.CharField(max_length=150, verbose_name='профессия')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='создано')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='обновлено')
-    # employer = models.ManyToManyField(settings.AUTH_USER_MODEL, through='EmployerCvRelation', related_name='look_up')
+    employer_bookmarked = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='BookmarkCV',
+        related_name='bookmark_keeper',
+        verbose_name='владелец закладки',
+        )
+
 
 
     def __str__(self):
@@ -53,8 +60,6 @@ class JobExp(models.Model):
 
 
 
-
-
 # class Education(models.Model):
 #
 #     BACHALOR = 'БАКАЛАВР'
@@ -71,5 +76,25 @@ class JobExp(models.Model):
 #     graduated_at = models.DateField(verbose_name='окончание учебы')
 
 
+class BookmarkCV(models.Model):
+    employer = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='employer_concern',
+        verbose_name='Работодатель')
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        related_name='bookmarked_cv',
+        verbose_name='Резюме')
+    # in_bookmarks = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.cv.position_seek}, {self.cv.position_seek}, {self.cv.first_name}, {self.cv.family_name}'
+
+    class Meta:
+        verbose_name = 'Избранные резюме'
+        verbose_name_plural = 'Избранные резюме'
+        ordering = ['cv']
 
 
