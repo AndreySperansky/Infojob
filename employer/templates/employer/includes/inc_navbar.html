@@ -28,7 +28,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'authapp:edit' %}">EDIT</a>
           <div class="dropdown-divider"></div>
-          {% if user.user_role == 'employee' %}
+          {% if user.user_role == 'EMPLOYER' %}
             <a class="dropdown-item" href="{% url 'employer:employer' %}">DASHBOARD</a>
           {% else %}
             <a class="dropdown-item" href="{% url 'employee:employee' %}">DASHBOARD</a>

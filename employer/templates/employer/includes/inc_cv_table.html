@@ -8,12 +8,13 @@
     <th class="text-center" scope="col">Family Name</th>
     <th class="text-center" scope="col">Gender/th>
     <th class="text-center" scope="col">City</th>
-{#    <th class="text-center" scope="col">Birthday</th>#}
+    {#    <th class="text-center" scope="col">Birthday</th>#}
     <th class="text-center" scope="col">Read / Response / Bookmark</th>
   </tr>
   </thead>
-  <tbody>
+  <tbody class="cv_list">
   {% for cv in cvs %}
+    {% csrf_token %}
     <tr>
       <th class="text-center" scope="row">{{ forloop.counter }}</th>
       <td class="text-center">{{ cv.position_seek }}</td>
@@ -22,20 +23,32 @@
       <td class="text-center">{{ cv.family_name }}</td>
       <td class="text-center">{{ cv.gender }}</td>
       <td class="text-center">{{ cv.city }}</td>
-{#      <td class="text-center">{{ cv.birthday }}</td>#}
+      {#      <td class="text-center">{{ cv.birthday }}</td>#}
       <td class="text-center">
         <!-- Read buttons -->
-        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employer:cv_read' cv.pk %}">
+        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary"
+                data-form-url="{% url 'employer:cv_read' cv.pk %}">
           <span class="fa fa-eye"></span>
         </button>
         <!-- Response buttons -->
-        <button type="button" class="response-cv btn btn-sm btn-outline-success" data-form-url="{% url 'employer:cv_response' cv.pk %}">
+        <button type="button" class="response-cv btn btn-sm btn-outline-success"
+                data-form-url="{% url 'employer:cv_response' cv.pk %}">
           <i class="fas fa-share-square"></i>
-        </button>
-        <!-- Delete buttons -->
-        <button type="button" class="bs-modal delete-cv btn btn-sm btn-outline-danger" data-form-url="{% url 'employer:cv_bookmark' cv.pk %}">
-          <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
-        </button>
+        </button>employer_id
+        <!-- Bookmark buttons -->
+        {% if user not in cv.employer_bookmarked.all %}
+          <a href="{% url 'employer:cv_bookmark' cv.id %}" id="bookmark" data-id="{{ cv.id }}">
+            <button type="button" class="btn btn-sm btn-outline-danger like-btn{{ cv.id }}">
+              <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
+            </button>
+          </a>
+        {% else %}
+          <a href="{% url 'employer:cv_bookmark' cv.id %}" id="bookmark" data-id="{{ cv.id }}">
+            <button type="button" class="btn btn-sm btn-danger like-btn{{ cv.id }}">
+              <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
+            </button>
+          </a>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

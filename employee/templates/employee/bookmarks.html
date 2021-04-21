@@ -10,8 +10,8 @@
   <div class="container ">
     <nav aria-label="breadcrumb ">
       <ol class="breadcrumb alert alert-success">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">search/</li>
+        <li class="breadcrumb-item"><a href="/">home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">bookmarks/</li>
       </ol>
     </nav>
   </div>
@@ -34,10 +34,10 @@
         <a class="nav-link" href="{% url 'employee:employee' %}">My CV</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link  active" href="#">Search</a>
+        <a class="nav-link" href="{% url 'employee:vacancies' %}">Search</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'employee:bookmarks' %}">Bookmarks</a>
+        <a class="nav-link active" href="{% url 'employee:bookmarks' %}">Bookmarks</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Response</a>
@@ -53,8 +53,8 @@
   <!-- Container for Vacancies Table-->
   <div class="container">
     <div class="col-12 mb-3">
-      {% if jobs %}
-        {% include "employee/includes/inc_vacancy_table.html" %}
+      {% if bookmarks %}
+        {% include "employee/includes/inc_bookmarks_table.html" %}
       {% else %}
         <p class="no-books text-primary">Nothing To Search.</p>
       {% endif %}

@@ -11,26 +11,28 @@
   </tr>
   </thead>
   <tbody>
-  {% for job in jobs %}
+  {% for bookmark in bookmarks %}
+    {% csrf_token %}
     <tr>
       <th class="text-center" scope="row">{{ forloop.counter }}</th>
-      <td class="text-center">{{ job.position }}</td>
-      <td class="text-center">{{ job.company }}</td>
-      <td class="text-center">{{ job.compensation }}</td>
-      <td class="text-center">{{ job.city }}</td>
-      <td class="text-center">{{ job.created_at }}</td>
+      <td class="text-center">{{ bookmark.vacancy.position }}</td>
+      <td class="text-center">{{ bookmark.vacancy.company }}</td>
+      <td class="text-center">{{ bookmark.vacancy.compensation }}</td>
+      <td class="text-center">{{ bookmark.vacancy.city }}</td>
+      <td class="text-center">{{ bookmark.vacancy.created_at }}</td>
       <td class="text-center">
+
         <!-- Read buttons -->
-        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employee:job_read' job.pk %}">
+        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employee:job_read' bookmark.vacancy.pk %}">
           <span class="fa fa-eye"></span>
         </button>
         <!-- Response buttons -->
-        <button type="button" class="response-cv btn btn-sm btn-outline-success" data-form-url="{% url 'employee:job_response' job.pk %}">
+        <button type="button" class="response-cv btn btn-sm btn-outline-success" data-form-url="{% url 'employee:job_response' bookmark.vacancy.pk %}">
           <i class="fas fa-share-square"></i>
         </button>
-        <!-- Bookmark buttons -->
-        <button type="button" class="bs-modal delete-cv btn btn-sm btn-outline-danger" data-form-url="{% url 'employee:job_bookmark' job.pk %}">
-          <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
+        <!-- Bookmark delete -->
+        <button type="button" class="bs-modal delete-cv btn btn-sm btn-danger" data-form-url="{% url 'employee:job_bookmark' bookmark.vacancy.pk %}">
+          <span class="fa fa-trash"></span>
         </button>
       </td>
     </tr>

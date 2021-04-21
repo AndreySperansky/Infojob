@@ -1,15 +1,15 @@
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .forms import CollectionTitleFormSet, CollectionForm, VacancyFilterForm
 from .models import CV, JobExp
-from employer.models import Vacancy
+from employer.models import Vacancy, BookmarkVacancy
 from django.db import transaction
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
 
 # ['collections'] - relation name
@@ -156,26 +156,58 @@ def vacancies(request):
         return JsonResponse(data)
 
 
+def add_remove_bookmark(request, pk):
+    user = request.user
+
+    try:
+        bookmark = BookmarkVacancy.objects.get(employee=user, vacancy=pk)
+        bookmark.delete()
+        res=False
+    except:
+        bookmark = BookmarkVacancy.objects.create(
+            employee=user,
+            vacancy=Vacancy.objects.get(id=pk))
+        bookmark.save()
+        res=True
+
+    data = {
+        'res': res
+    }
+
+    return JsonResponse(data, safe=False)
+    # return HttpResponseRedirect(reverse('employee:vacancies'))
+
+
+class JobResponseView(View):
+    pass
+
+class JobReadView(View):
+    pass
+
+
+
 ##########################################################################
-#                           Vacancy Search views                         #
+#                          Vacancy  Bookmark views                         #
 ##########################################################################
 
-class JobBookmarkView(ListView):
-    model = Vacancy
+class BookmarkView(ListView):
+    model = BookmarkVacancy
     context_object_name = 'bookmarks'
-    template_name = "employee/search.html"
+    template_name = "employee/bookmarks.html"
+
 
     def get_queryset(self):
         qs = super().get_queryset()
         if 'type' in self.request.GET:
-            qs = qs.filter(job_type=int(self.request.GET['type']))
+            qs = qs.filter(bookmark_type=int(self.request.GET['type']))
         return qs
 
 
 def job_bookmarks(request):
+    user = request.user
     data = dict()
     if request.method == 'GET':
-        bookmarks = Vacancy.objects.all()
+        bookmarks = BookmarkVacancy.objects.filter(employee=user)
         data['table'] = render_to_string(
             'employee/includes/inc_bookmarks_table.html',
             {'bookmarks': bookmarks},
@@ -183,8 +215,5 @@ def job_bookmarks(request):
         )
         return JsonResponse(data)
 
-class JobResponseView(View):
-    pass
 
-class JobReadView(View):
-    pass
+

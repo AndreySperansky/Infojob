@@ -125,6 +125,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Папка для сбора �
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'infojob/static'),
     os.path.join(BASE_DIR, 'employee/static'),
+    os.path.join(BASE_DIR, 'employer/static'),
 )
 
 

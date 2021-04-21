@@ -1,8 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, View, FormView
 from django.views.generic.detail import DetailView
 # from django.views.generic.list import ListView
@@ -160,11 +160,32 @@ def cvs(request):
         return JsonResponse(data)
 
 
-class CvBookmarkView(View):
-    pass
+def add_remove_bookmark(request, pk):
+    user = request.user
+
+    try:
+        bookmark = BookmarkCV.objects.get(employer=user, cv=pk)
+        bookmark.delete()
+        res=False
+    except:
+        bookmark = BookmarkCV.objects.create(
+            employer=user,
+            cv=CV.objects.get(id=pk))
+        bookmark.save()
+        res=True
+
+    data = {
+        'res': res
+    }
+
+    return JsonResponse(data, safe=False)
+    # return HttpResponseRedirect(reverse('employer:cvs'))
+
+
 
 class CvResponseView(View):
     pass
+
 
 class CvReadView(View):
     pass

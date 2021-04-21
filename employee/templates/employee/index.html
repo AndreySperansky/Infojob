@@ -21,7 +21,7 @@
 
     <div class="row">
       <div class="col-md-12 mb-4">
-        <h2>Employee Dashboard: {{ user.first_name }}</h2>
+        <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded" width="50"> {{ user.first_name|default:'Noname' }} (Employee)</h2>
         <hr>
       </div>
     </div>
@@ -30,10 +30,16 @@
 
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link active" href="{% url 'employee:employee' %}">Dash</a>
+        <a class="nav-link active" href="{% url 'employee:employee' %}">My CV</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{% url 'employee:vacancies' %}">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employee:bookmarks' %}">Bookmarks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Response</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">MSG</a>
@@ -61,43 +67,10 @@
     </div>
     <!-- End Card -->
 
-    <!-- My resumes card -->
-    <div class="card my-lg-5">
-      <div class="card-header">
-        <h3>My Favorite Vacancies</h3>
-        <a class="btn btn-outline-success" href="{% url 'employee:cv_create' %}" role="button">Create new resume</a>
-      </div>
-      <div class="card-body">
-        {% if cv %}
-          {% for object in cv %}
-            <li>
-              <a href="{% url 'employee:cv_detail' pk=object.pk %}">Resume ID {{ object }}</a>
-            </li>
-          {% endfor %}
-        {% else %}
-          <p>No resume so far</p>
-        {% endif %}
-      </div>
-    </div>
-    <!-- End Card -->
-
 
   </div>
   <!-- End Container -->
 
 {% endblock %}
-</div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/js/bootstrap.min.js"
-        integrity="sha384-7aThvCh9TypR7fIc2HV4O/nFMVCBwyIUKL8XCtKE+8xgCgl/PQGuFsvShjr74PBp"
-        crossorigin="anonymous"></script>
-</body>
-</html>
+

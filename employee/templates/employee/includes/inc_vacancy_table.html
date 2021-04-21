@@ -10,8 +10,9 @@
     <th class="text-center" scope="col">Read / Response / Bookmark</th>
   </tr>
   </thead>
-  <tbody>
+  <tbody class="vacancy_list">
   {% for job in jobs %}
+    {% csrf_token %}
     <tr>
       <th class="text-center" scope="row">{{ forloop.counter }}</th>
       <td class="text-center">{{ job.position }}</td>
@@ -21,7 +22,7 @@
       <td class="text-center">{{ job.created_at }}</td>
       <td class="text-center">
         <!-- Read buttons -->
-        <button type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employee:job_read' job.pk %}">
+        <button  type="button" class="bs-modal read-cv btn btn-sm btn-primary" data-form-url="{% url 'employee:job_read' job.pk %}">
           <span class="fa fa-eye"></span>
         </button>
         <!-- Response buttons -->
@@ -29,9 +30,19 @@
           <i class="fas fa-share-square"></i>
         </button>
         <!-- Bookmark buttons -->
-        <button type="button" class="bs-modal delete-cv btn btn-sm btn-outline-danger" data-form-url="{% url 'employee:job_bookmark' job.pk %}">
-          <span class="fa fa-trash"></span><i class="fas fa-bookmark"></i>
-        </button>
+        {% if user not in job.employee_bookmarked.all %}
+          <a href="{% url 'employee:job_bookmark' job.id %}" id="bookmark" data-id="{{ job.id }}">
+            <button type="button" class="btn btn-sm btn-outline-danger like-btn{{ job.id }}">
+              <i class="fas fa-bookmark"></i>
+            </button>
+          </a>
+        {% else %}
+          <a href="{% url 'employee:job_bookmark' job.id %}" id="bookmark" data-id="{{ job.id }}">
+            <button type="button" class="btn btn-sm btn-danger like-btn{{ job.id }}">
+              <i class="fas fa-bookmark"></i>
+            </button>
+          </a>
+        {% endif %}
       </td>
     </tr>
   {% endfor %}

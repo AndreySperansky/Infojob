@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 
+app_name = 'employer'
 
 urlpatterns = [
 	path('', HomepageView.as_view(), name='employer'),
@@ -15,11 +16,9 @@ urlpatterns = [
     path('vacancy/delete/<int:pk>/', VacancyDelete.as_view(), name='vacancy_delete'),
     path('cv/', SearchView.as_view(), name='cvs'),
     path('cv/list/', cvs, name='cv_list'),
-    path('cv/filter/', CvFilterView.as_view(), name='cv_filter'),
-    path('cv/bookmark/<int:pk>', CvBookmarkView.as_view(), name='cv_bookmark'),
+    path('cv/bookmark/<int:pk>', add_remove_bookmark, name='cv_bookmark'),
     path('cv/response/<int:pk>', CvResponseView.as_view(), name='cv_response'),
     path('cv/read/<int:pk>', CvReadView.as_view(), name='cv_read'),
-
+    path('cv/filter/', CvFilterView.as_view(), name='cv_filter'),
 ]
-app_name = 'employer'
 

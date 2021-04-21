@@ -10,8 +10,8 @@
   <div class="container ">
     <nav aria-label="breadcrumb ">
       <ol class="breadcrumb alert alert-success">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">search/</li>
+        <li class="breadcrumb-item"><a href="/">home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">response/</li>
       </ol>
     </nav>
   </div>
@@ -34,13 +34,14 @@
         <a class="nav-link" href="{% url 'employee:employee' %}">My CV</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link  active" href="#">Search</a>
+        <a class="nav-link" href="{% url 'employee:vacancies' %}">Search</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'employee:bookmarks' %}">Bookmarks</a>
+        <a class="nav-link" href="#">Bookmarks</a>
+{#        <a class="nav-link" href="{% url 'employee:job_bookmark' %}">Bookmarks</a>#}
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Response</a>
+        <a class="nav-link active" href="#">Response</a>
 {#        <a class="nav-link active" href="{% url 'employee:job_response' %}">Response</a>#}
       </li>
       <li class="nav-item">
