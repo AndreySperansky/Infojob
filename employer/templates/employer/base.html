@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!-- Font awesome CSS -->
-  <link rel="stylesheet" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+{#  <link rel="stylesheet" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">#}
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
           crossorigin="anonymous"></script>
@@ -32,11 +32,14 @@
   <!-- Header -->
   {% include 'employer/includes/inc_header.html' %}
 
+  <!-- Modal form -->
+  {% include 'employer/includes/inc_modal.html' %}
+
   <!-- Page Content -->
   {% block content %}
 
   {% endblock %}
-  <!-- /.container -->
+
 
   <!-- Footer -->
   <footer class="py-5 bg-dark">
@@ -55,6 +58,8 @@
 
   <!-- JavaScript -->
   <script src="{% static 'js/cv_likes.js' %}"></script>
+  <script src="{% static 'js/modal.js' %}"></script>
+  <script src="{% static 'js/jquery.bootstrap.modal.forms.min.js' %}"></script>
 
 
 </body>

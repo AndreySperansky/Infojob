@@ -1,3 +1,4 @@
+from bootstrap_modal_forms.generic import BSModalDeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
@@ -187,8 +188,14 @@ class CvResponseView(View):
     pass
 
 
-class CvReadView(View):
-    pass
+
+class CvDetailView(DetailView):
+    model = CV
+    template_name = 'employer/cv_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CvDetailView, self).get_context_data(**kwargs)
+        return context
 
 
 ##########################################################################
@@ -222,3 +229,11 @@ def cv_bookmarks(request):
 
 
 
+
+
+class BookmarkDeleteView(BSModalDeleteView):
+    model = BookmarkCV
+    template_name = 'employer/delete_bookmark.html'
+    success_message = 'Success: Bookmark was deleted.'
+    success_url = reverse_lazy('employer:bookmarks')
+    # return HttpResponseRedirect(reverse('employer:cvs'))

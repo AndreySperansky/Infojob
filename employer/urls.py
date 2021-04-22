@@ -19,8 +19,9 @@ urlpatterns = [
     path('cv/bookmark/', BookmarkView.as_view(), name='bookmarks'),
     path('cv/bookmark/list/', cv_bookmarks, name='bookmark_list'),
     path('cv/bookmark/<int:pk>', add_remove_bookmark, name='cv_bookmark'),
+    path('cv/delete/<int:pk>', BookmarkDeleteView.as_view(), name='delete_bookmark'),
     path('cv/response/<int:pk>', CvResponseView.as_view(), name='cv_response'),
-    path('cv/read/<int:pk>', CvReadView.as_view(), name='cv_read'),
+    path('cv/read/<int:pk>', CvDetailView.as_view(), name='cv_read'),
     path('cv/filter/', CvFilterView.as_view(), name='cv_filter'),
 ]
 

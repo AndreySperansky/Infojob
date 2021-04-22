@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'employee.apps.EmployeeConfig',
     'employer.apps.EmployerConfig',
     'msgapp.apps.MsgappConfig',
+    'widget_tweaks',
     'crispy_forms',
     'dynamic_formsets',
     'bootstrap_modal_forms',

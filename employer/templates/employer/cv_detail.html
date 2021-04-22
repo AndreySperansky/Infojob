@@ -1,0 +1,109 @@
+
+<div class="modal-header">
+  <h3 class="modal-title"></h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="container mb-5">
+
+  <div class="card mb-5">
+    <div class="card-header">
+      <h3><b>Resume: {{ object }} </b></h3>
+    </div>
+    <div class="card-body col-md-9">
+      <table class="table">
+        {% if object %}
+          <tr>
+            <td><img src="/media/{{ object.user_pic|default:'users/user-placeholder.png' }}"
+                     alt="{{ object.family_name }}"></td>
+            <td><h3>{{ object.first_name }} {{ object.middle_name }} {{ object.family_name }}</h3></td>
+          </tr>
+        {% endif %}
+        {% if object.gender %}
+
+          <tr>
+            <th>Gender</th>
+            <td><h6>{{ object.gender }}</h6></td>
+          </tr>
+        {% endif %}
+        {% if object.birthday %}
+          <tr>
+            <th>Birthday</th>
+            <td><h6>{{ object.birthday }}</h6></td>
+          </tr>
+        {% endif %}
+
+        {% if object.city %}
+          <tr>
+            <th>City</th>
+            <td><h6>{{ object.city }}</h6></td>
+          </tr>
+        {% endif %}
+
+        {% if object.email %}
+          <tr>
+            <th>Email</th>
+            <td><h6>{{ object.email }}</h6></td>
+          </tr>
+        {% endif %}
+
+        {% if object.profession %}
+          <tr>
+            <th>Profession</th>
+            <td><h6>{{ object.profession }}</h6></td>
+          </tr>
+        {% endif %}
+
+
+        {#        <!--for inline added edu_titles-->#}
+        {#        {% if object.edu_titles %}#}
+        {#        {% for title in object.cv.all %}#}
+        {#        <tr>#}
+        {#            <th>Title {{edu_titles.college_name}}</th>#}
+        {#            <td>{{edu_titles.specialization}}</td>#}
+        {#            <td>{{edu_titles.grade}}</td>#}
+        {#            <td>{{edu_titles.graduated_at}}</td>#}
+        {#        </tr>#}
+        {#        {% endfor %}#}
+        {#        {% endif %}#}
+        {#        <!--end-->#}
+        <tr>
+          <th><h4 style="color: #092fee">Experience</h4></th>
+        </tr>
+
+
+        <!--for inline added job -->
+        {% if object.experiences %}
+          {% for title in object.experiences.all %}
+            <tr>
+              <th>Employer</th>
+              <th>Position</th>
+              <th>Hired</th>
+              <th>Fired</th>
+            </tr>
+            <tr>
+              <td>{{ title.employer }}</td>
+              <td>{{ title.position }}</td>
+              <td>{{ title.start_at }}</td>
+              <td>{{ title.finish_at }}</td>
+            </tr>
+          {% endfor %}
+        {% endif %}
+
+        {% if object.created_at %}
+          <tr>
+            <th>Created at</th>
+            <td><h6>{{ object.created_at }}</h6></td>
+          </tr>
+        {% endif %}
+
+      </table>
+{#        <a class="btn btn-outline-info" href="{% url 'employee:cv_update' pk=object.id %}">Update</a>#}
+    </div>
+  </div>
+
+</div>
+
+
