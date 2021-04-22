@@ -189,3 +189,36 @@ class CvResponseView(View):
 
 class CvReadView(View):
     pass
+
+
+##########################################################################
+#                          Vacancy  Bookmark views                         #
+##########################################################################
+
+class BookmarkView(ListView):
+    model = BookmarkCV
+    context_object_name = 'bookmarks'
+    template_name = "employer/bookmarks.html"
+
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if 'type' in self.request.GET:
+            qs = qs.filter(bookmark_type=int(self.request.GET['type']))
+        return qs
+
+
+def cv_bookmarks(request):
+    user = request.user
+    data = dict()
+    if request.method == 'GET':
+        bookmarks = BookmarkVacancy.objects.filter(employer=user)
+        data['table'] = render_to_string(
+            'employer/includes/inc_bookmarks_table.html',
+            {'bookmarks': bookmarks},
+            request=request
+        )
+        return JsonResponse(data)
+
+
+

@@ -138,3 +138,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 AUTH_USER_MODEL = 'authapp.InfojobUser'
 
 CRISPY_FAILS_SILENTLY = not DEBUG
+
+
+# STATICFILES_FINDERS = [
+#     # searches in STATICFILES_DIRS
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     # searches in STATIC subfolder of each app
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# ]

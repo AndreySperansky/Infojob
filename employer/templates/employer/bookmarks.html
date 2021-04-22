@@ -11,7 +11,7 @@
     <nav aria-label="breadcrumb ">
       <ol class="breadcrumb alert alert-success">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">search/</li>
+        <li class="breadcrumb-item active" aria-current="page">bookmarks/</li>
       </ol>
     </nav>
   </div>
@@ -33,10 +33,10 @@
         <a class="nav-link" href="{% url 'employer:employer' %}">Dash</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="{% url 'employer:cvs' %}">Search</a>
+        <a class="nav-link" href="{% url 'employer:cvs' %}">Search</a>
       </li>
-       <li class="nav-item">
-        <a class="nav-link" href="{% url 'employer:bookmarks' %}">Bookmarks</a>
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'employer:bookmarks' %}">Bookmarks</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Response</a>
@@ -57,8 +57,8 @@
 
   <div class="container">
     <div class="col-12 mb-3">
-      {% if cvs %}
-        {% include "employer/includes/inc_cv_table.html" %}
+      {% if bookmarks %}
+        {% include "employer/includes/inc_bookmarks_table.html" %}
       {% else %}
         <p class="no-books text-primary">Nothing To Search.</p>
       {% endif %}

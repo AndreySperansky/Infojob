@@ -11,7 +11,7 @@
     <nav aria-label="breadcrumb ">
       <ol class="breadcrumb alert alert-success">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">search/</li>
+        <li class="breadcrumb-item active" aria-current="page">response/</li>
       </ol>
     </nav>
   </div>
@@ -30,16 +30,16 @@
   <div class="container">
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'employer:employer' %}">Dash</a>
+        <a class="nav-link" href="{% url 'employer:employer' %}">Vacancies</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="{% url 'employer:cvs' %}">Search</a>
+        <a class="nav-link" href="{% url 'employer:cvs' %}">Search</a>
       </li>
-       <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'employer:bookmarks' %}">Bookmarks</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Response</a>
+        <a class="nav-link active" href="#">Response</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">MSG</a>

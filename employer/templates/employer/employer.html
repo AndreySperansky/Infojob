@@ -16,20 +16,38 @@
     </nav>
   </div>
 
+  <div class="container mb-lg-4 mt-lg-4">
+    <div class="col-md-12 mb-4">
+      <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
+               width="60"> {{ user.first_name|default:'Noname' }} (Employer)</h2>
+      <hr>
+    </div>
+  </div>
+
 
   <!-- Tabbar -->
   <div class="container">
-    {% include 'employer/includes/inc_tabbar.html' %}
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'employer:employer' %}">Vacancies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employer:cvs' %}">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employer:bookmarks' %}">Bookmarks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Response</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">MSG</a>
+      </li>
+    </ul>
   </div>
 
 
-  <div class="container mb-lg-4 mt-lg-4">
-    <h2>Employer {{ request.user.first_name }} Dashbord</h2>
-    <hr>
-    {#    <h3>Hello {{ request.user }}</h3>#}
-  </div>
-
-  <!-- Container for Companies-->
+    <!-- Container for Companies-->
   <div class="container mb-lg-4">
     <!-- My Companies card -->
     <div class="card mb-lg-4">
@@ -126,17 +144,5 @@
 
   </div>
   <!-- End Container for Vacancies -->
-
-  <div class="container">
-    <div class="col-12 mb-3">
-      {% if cvs %}
-        {% include "employer/includes/inc_cv_table.html" %}
-      {% else %}
-        <p class="no-books text-primary">No resumes added yet.</p>
-      {% endif %}
-    </div>
-
-  </div>
-
 
 {% endblock %}
