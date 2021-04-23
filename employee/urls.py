@@ -16,7 +16,8 @@ urlpatterns = [
     path('vacancy/bookmark/', BookmarkView.as_view(), name='bookmarks'),
     path('vacancy/bookmark/list/', job_bookmarks, name='bookmark_list'),
     path('vacancy/bookmark/<int:pk>', add_remove_bookmark, name='job_bookmark'),
+    path('vacancy/delete/<int:pk>', BookmarkDeleteView.as_view(), name='delete_bookmark'),
     path('vacancy/response/<int:pk>', JobResponseView.as_view(), name='job_response'),
-    path('vacancy/read/<int:pk>', JobReadView.as_view(), name='job_read'),
+    path('vacancy/read/<int:pk>', JobDetailView.as_view(), name='job_read'),
     path('vacancy/filter/', JobFilterView.as_view(), name='job_filter'),
 ]

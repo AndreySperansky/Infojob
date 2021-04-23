@@ -1,0 +1,56 @@
+
+<div class="modal-header">
+  <h3 class="modal-title"></h3>
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="container mb-5">
+  <div class="card">
+    <div class="card-header">
+      <h2><b> {{ object.position }} </b></h2>
+    </div>
+    <div class="card-body col-md-9">
+      <table class="table">
+        {% if object %}
+          <tr>
+            <th>Company</th>
+            <td><h3>{{ object.company }}</h3></td>
+          </tr>
+        {% endif %}
+
+        {% if object.city %}
+          <tr>
+            <th>City</th>
+            <td><h6>{{ object.city }}</h6></td>
+          </tr>
+        {% endif %}
+
+
+        {% if object.compensation %}
+          <tr>
+            <th>Compensation</th>
+            <td><h6>{{ object.compensation }}</h6></td>
+          </tr>
+        {% endif %}
+
+        {% if object.duties %}
+          <tr>
+            <th>Duties</th>
+            <td><h6>{{ object.duties }}</h6></td>
+          </tr>
+        {% endif %}
+
+
+        {% if object.created_at %}
+          <tr>
+            <th>Created at</th>
+            <td><h6>{{ object.created_at }}</h6></td>
+          </tr>
+        {% endif %}
+
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+from bootstrap_modal_forms.generic import BSModalDeleteView
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
@@ -12,7 +13,7 @@ from django.db import transaction
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
 
-# ['collections'] - relation name
+
 # ['title'] - Formset('title')
 
 
@@ -21,7 +22,7 @@ class HomepageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # [relation_name]
+        # ['cv'] - relation name
         context['cv'] = CV.objects.order_by('id')
         return context
 
@@ -181,9 +182,15 @@ def add_remove_bookmark(request, pk):
 class JobResponseView(View):
     pass
 
-class JobReadView(View):
-    pass
 
+
+class JobDetailView(DetailView):
+    model = Vacancy
+    template_name = 'employee/vacancy_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(JobDetailView, self).get_context_data(**kwargs)
+        return context
 
 
 ##########################################################################
@@ -217,3 +224,8 @@ def job_bookmarks(request):
 
 
 
+class BookmarkDeleteView(BSModalDeleteView):
+    model = BookmarkVacancy
+    template_name = 'employee/delete_bookmark.html'
+    success_message = 'Success: Bookmark was deleted.'
+    success_url = reverse_lazy('employee:bookmarks')

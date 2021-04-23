@@ -1,6 +1,5 @@
 console.log("Hello from modals!")
 
-
 $(function () {
           // Log in & Sign up buttons
           // The formURL is given explicitly

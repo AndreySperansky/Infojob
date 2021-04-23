@@ -1,6 +1,6 @@
 // Рабочий варант - заменяет текст внутри кнопки и количество лайков
 
-console.log("Hello World!")
+console.log("Hello from likes!")
 
 $(document).ready(function(){
 

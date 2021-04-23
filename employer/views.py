@@ -236,4 +236,4 @@ class BookmarkDeleteView(BSModalDeleteView):
     template_name = 'employer/delete_bookmark.html'
     success_message = 'Success: Bookmark was deleted.'
     success_url = reverse_lazy('employer:bookmarks')
-    # return HttpResponseRedirect(reverse('employer:cvs'))
+
