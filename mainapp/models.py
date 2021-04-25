@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+
 
 class News(models.Model):
     title = models.CharField(max_length=150, verbose_name='Заголовок')
@@ -11,6 +13,10 @@ class News(models.Model):
     # Чтобы представить строковое представление поля модели используем метод __str__
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('views_news', kwargs={"pk": self.pk})        # ????
+
 
     # Изменение отображения заголовка модели в админке
     class Meta:
