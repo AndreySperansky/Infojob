@@ -4,9 +4,11 @@ from .views  import *
 app_name = 'msgapp'
 
 urlpatterns = [
-    path('', HomepageView.as_view(), name='index'),
-    path('cv/<int:pk>/add', add_favorite_cv, name='add_favarite_cv'),
-    path('cv/<int:pk>/remove', remove_favorite_cv, name='remove_favarite_cv'),
-    path('cv/<int:pk>/remove', add_favorite_vacancy, name='add_favarite_vacancy'),
-    path('cv/<int:pk>/remove', remove_favorite_vacancy, name='remove_favarite_vacancy'),
+    # path('', MainpageView.as_view(), name='index'),
+    # path('cv/<int:pk>/add', add_response_cv, name='add_response_cv'),
+    # path('cv/<int:pk>/view', view_response_cv, name='view_response_cv'),
+    # path('cv/<int:pk>/remove', remove_response_cv, name='remove_response_cv'),
+    # path('vacancy/<int:pk>/add', remove_response_vacancy, name='add_response_vacancy'),
+    # path('vacancy/<int:pk>/view', remove_response_vacancy, name='view_response_vacancy'),
+    # path('vacancy/<int:pk>/remove', remove_response_vacancy, name='remove_response_vacancy'),
 ]

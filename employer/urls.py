@@ -14,14 +14,21 @@ urlpatterns = [
     path('vacancy/create/', VacancyCreate.as_view(), name='vacancy_create'),
     path('vacancy/update/<int:pk>/', VacancyUpdate.as_view(), name='vacancy_update'),
     path('vacancy/delete/<int:pk>/', VacancyDelete.as_view(), name='vacancy_delete'),
+
     path('cv/', SearchView.as_view(), name='cvs'),
     path('cv/list/', cvs, name='cv_list'),
     path('cv/bookmark/', BookmarkView.as_view(), name='bookmarks'),
     path('cv/bookmark/list/', cv_bookmarks, name='bookmark_list'),
     path('cv/bookmark/<int:pk>', add_remove_bookmark, name='cv_bookmark'),
     path('cv/delete/<int:pk>', BookmarkDeleteView.as_view(), name='delete_bookmark'),
-    path('cv/response/<int:pk>', CvResponseView.as_view(), name='cv_response'),
     path('cv/read/<int:pk>', CvDetailView.as_view(), name='cv_read'),
     path('cv/filter/', CvFilterView.as_view(), name='cv_filter'),
+
+    # path('response/', ResponseView.as_view(), name='responses'),
+    path('response/', ResponseCreate.as_view(), name='response'),
+    # path('response/list/', response_list, name='response_list'),
+    # path('response/<int:pk>/', add_remove_response, name='add_response'),
+    # path('response/read/<int:pk>/', ResponseView.as_view(), name='read_response'),
+    # path('response/reject/<int:pk>/', ResponseView.as_view(), name='reject_response'),
 ]
 

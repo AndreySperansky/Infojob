@@ -43,7 +43,8 @@ class Company(models.Model):
 
 
 class Vacancy(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='for_company' )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='vacancy_fk' )
+
     position = models.CharField(max_length=150, verbose_name='должность')
     city = models.CharField(max_length=150, verbose_name='город')
     duties = models.TextField(verbose_name='обязанности')
@@ -101,14 +102,34 @@ class BookmarkVacancy(models.Model):
         ordering = ['vacancy']
 
 
+
 class Response(models.Model):
+    # user = models.ForeignKey(
+    #     settings.AUTH_USER_MODEL,
+    #     on_delete=models.CASCADE,
+    #     related_name='user',)
+
     cv = models.ForeignKey(
         CV,
         on_delete=models.CASCADE,
         related_name='fk_cv',
         verbose_name='Резюме')
+
     vacancy = models.ForeignKey(
         Vacancy,
         on_delete=models.CASCADE,
         related_name='fk_vacancy',
         verbose_name='Вакансия')
+
+    message = models.TextField(verbose_name='сообщение', blank=True)
+
+
+    def __str__(self):
+        return f'{self.vacancy.position}, {self.vacancy.company}: ' \
+               f'{self.cv.position_seek}, {self.cv.first_name} {self.cv.family_name}'
+
+
+    class Meta:
+        verbose_name = 'Отклик'
+        verbose_name_plural = 'Отклики'
+        ordering = ['vacancy', 'cv']

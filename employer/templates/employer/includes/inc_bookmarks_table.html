@@ -30,10 +30,11 @@
           <span class="fa fa-eye"></span>
         </button>
         <!-- Response buttons -->
-        <button type="button" class="response-cv btn btn-sm btn-outline-success"
-                data-form-url="{% url 'employer:cv_response' bookmark.pk %}">
+        <button id="create-book-sync" type="button" class="bs-modal response btn btn-sm btn-outline-success"
+                data-form-url="{% url 'employer:response' %}">
           <i class="fas fa-share-square"></i>
         </button>
+
         <!-- Bookmark buttons delete -->
         <button type="button" class="bs-modal delete-bookmark btn btn-sm btn-danger"
                 data-form-url="{% url 'employer:delete_bookmark' bookmark.pk %}">

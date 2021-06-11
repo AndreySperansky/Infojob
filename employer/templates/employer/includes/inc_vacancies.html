@@ -1,0 +1,37 @@
+{% load filter_tags %}
+
+<div class="container">
+    <div class="tab-content" id="myTabContent">
+      <!-- My vacancy tab 1 -->
+      <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="home-tab">
+
+          <!-- My vacancy card 1 -->
+          <div class="card mb-lg-4">
+            <div class="card-header">
+              <h3>My Vacancies</h3>
+              <a class="btn btn-outline-primary" href="{% url 'employer:vacancy_create' %}" role="button">Create New Vacancy</a>
+            </div>
+            <div class="card-body">
+              {% if companies %}
+              {% for company in companies|in_user_category:user %}
+                {% if vacancies %}
+                  {% for job in vacancies|in_company_category:company %}
+                    <li>
+                      <a href="{% url 'employer:vacancy_detail' pk=job.pk %}">{{ job }}</a>
+                    </li>
+                  {% endfor %}
+                {% else %}
+                  <p>No vacancies so far</p>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <p>No companies so far</p>
+            {% endif %}
+            </div>
+          </div>
+          <!-- End Card -->
+
+      </div>
+    </div>
+  </div>
+  <!-- End Container for Vacancies -->

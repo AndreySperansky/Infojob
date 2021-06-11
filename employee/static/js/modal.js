@@ -1,22 +1,17 @@
-console.log("Hello from modals!")
+console.log("Hello from employee modals!")
 
 $(function () {
-          // Log in & Sign up buttons
-          // The formURL is given explicitly
-          $("#login-btn").modalForm({
-            formURL: "{% url 'login' %}"
-          });
-
-          $("#signup-btn").modalForm({
-            formURL: "{% url 'signup' %}"
-          });
-
-          
+        
 
           // Read and Delete bookmark buttons open modal with id="modal"
           // The formURL is retrieved from the data of the element
           $(".read-bookmark").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url")});
+          });
+          
+          $(".response").each(function () {
+              $(this).modalForm({formURL: $(this).data("form-url")});
+              console.log("Hello from response!")
           });
           
           $(".delete-bookmark").each(function () {

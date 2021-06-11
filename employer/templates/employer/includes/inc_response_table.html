@@ -1,0 +1,39 @@
+<table id="response-table" class="table">
+  <thead>
+  <tr>
+    <th class="text-center" scope="col">#</th>
+    <th class="text-center" scope="col">Position</th>
+    <th class="text-center" scope="col">Vacancy</th>
+    <th class="text-center" scope="col">Company</th>
+    <th class="text-center" scope="col">Read / Response / Delete</th>
+  </tr>
+  </thead>
+  <tbody class="cv_list">
+  {% for response in responses %}
+    {% csrf_token %}
+    <tr>
+      <th class="text-center" scope="row">{{ forloop.counter }}</th>
+      <td class="text-center">{{ response.cv.position_seek }}</td>
+      <td class="text-center">{{ response.vacancy.position }}</td>
+      <td class="text-center">{{ response.vacancy.company }}</td>
+      <td class="text-center">
+        <!-- Read buttons -->
+        <button type="button" class="bs-modal read-bookmark btn btn-sm btn-primary"
+                data-form-url="{% url 'employer:cv_read' response.cv.pk %}">
+          <span class="fa fa-eye"></span>
+        </button>
+        <!-- Response buttons -->
+        <button type="button" class="response-cv btn btn-sm btn-outline-success">
+{#                data-form-url="{% url 'employer:cv_response' response.pk %}">#}
+          <i class="fas fa-share-square"></i>
+        </button>
+        <!-- Bookmark buttons delete -->
+        <button type="button" class="bs-modal delete-bookmark btn btn-sm btn-danger"
+                data-form-url="{% url 'employer:delete_bookmark' response.pk %}">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>

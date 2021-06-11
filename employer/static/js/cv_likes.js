@@ -1,6 +1,6 @@
-// Рабочий варант - заменяет текст внутри кнопки и количество лайков
+// Рабочий варант - заменяет текст внутри кнопки
 
-console.log('Hello!')
+console.log('Hello from Employer Likes!')
 
 
 $(document).ready(function(){

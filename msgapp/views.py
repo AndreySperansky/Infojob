@@ -2,21 +2,37 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 
-class HomepageView(TemplateView):
+
+class MainpageView(TemplateView):
+    pass
+
+###############################################################
+#            CV response views
+###############################################################
+
+def add_response_cv():
     pass
 
 
-def add_favorite_cv():
-    pass
-
-def remove_favorite_cv():
+def view_response_cv():
     pass
 
 
-def add_favorite_vacancy():
+def remove_response_cv():
     pass
 
-def remove_favorite_vacancy():
+###############################################################
+#            vacancy response views
+###############################################################
+
+def add_response_vacancy():
     pass
 
+
+def view_response_vacancy():
+    pass
+
+
+def remove_response_vacancy():
+    pass
 

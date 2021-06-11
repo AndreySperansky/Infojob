@@ -179,11 +179,6 @@ def add_remove_bookmark(request, pk):
     # return HttpResponseRedirect(reverse('employee:vacancies'))
 
 
-class JobResponseView(View):
-    pass
-
-
-
 class JobDetailView(DetailView):
     model = Vacancy
     template_name = 'employee/vacancy_detail.html'
@@ -229,3 +224,42 @@ class BookmarkDeleteView(BSModalDeleteView):
     template_name = 'employee/delete_bookmark.html'
     success_message = 'Success: Bookmark was deleted.'
     success_url = reverse_lazy('employee:bookmarks')
+
+
+##########################################################################
+#                          Response views                                #
+##########################################################################
+
+
+class ResponseView(View):
+    pass
+
+
+def add_remove_response(request, pk):
+    user = request.user
+
+    try:
+        bookmark = BookmarkVacancy.objects.get(employee=user, vacancy=pk)
+        bookmark.delete()
+        res=False
+    except:
+        bookmark = BookmarkVacancy.objects.create(
+            employee=user,
+            vacancy=Vacancy.objects.get(id=pk))
+        bookmark.save()
+        res=True
+
+    data = {
+        'res': res
+    }
+
+    return JsonResponse(data, safe=False)
+    # return HttpResponseRedirect(reverse('employee:vacancies'))
+
+
+def response_list():
+    pass
+
+
+def reject_response():
+    pass

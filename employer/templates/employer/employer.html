@@ -57,10 +57,10 @@
           Company</a>
       </div>
       <div class="card-body">
-        {% if company %}
-          {% for object in company|in_user_category:user %}
+        {% if companies %}
+          {% for company in companies|in_user_category:user %}
             <li>
-              <a href="{% url "employer:company_detail" pk=object.pk %}">Company {{ object.company_name }}</a>
+              <a href="{% url "employer:company_detail" pk=company.pk %}">{{ company.company_name }}</a>
             </li>
           {% endfor %}
         {% else %}
@@ -75,74 +75,65 @@
 
 
   <!-- Container for Vacancies-->
+
   <div class="container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item" role="presentation">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-           >Company1</a>
-      </li>
-      <li class="nav-item" role="presentation">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-           >Company2</a>
-      </li>
+      {% if companies %}
+      {% for company in companies|in_user_category:user %}
+
+        <li class="nav-item" role="presentation">
+          <a class="nav-link" id="company-tab-{{ company.pk }}" data-toggle="tab" href="#home" role="tab"
+             >{{ company }}</a>
+        </li>
+
+      {% endfor %}
+      {% else %}
+        <p>No companies so far</p>
+      {% endif %}
     </ul>
   </div>
 
-  <div class="container">
-    <div class="tab-content" id="myTabContent">
-      <!-- My vacancy tab 1 -->
-      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <div>
-          <!-- My vacancy card 1 -->
-          <div class="card mb-lg-4">
-            <div class="card-header">
-              <h3>My Vacancies</h3>
-              <a class="btn btn-outline-primary" href="{% url 'employer:vacancy_create' %}" role="button">Create New Vacancy</a>
-            </div>
-            <div class="card-body">
-              {% if vacancy %}
-                {% for object in vacancy %}
-                  <li>
-                    <a href="{% url 'employer:vacancy_detail' pk=object.pk %}">Vacancy ID {{ object }}</a>
-                  </li>
-                {% endfor %}
-              {% else %}
-                <p>No vacancies so far</p>
-              {% endif %}
-            </div>
-          </div>
-          <!-- End Card -->
-        </div>
-      </div>
 
 
-      <!-- My vacancy tab 2 -->
-      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <div>
-          <!-- My resumes card 2 -->
-          <div class="card mb-lg-4">
-            <div class="card-header">
-              <h3>My Vacancies</h3>
-              <a class="btn btn-outline-primary" href="{% url 'employer:vacancy_create' %}" role="button">Create New Vacancy</a>
-            </div>
-            <div class="card-body">
-              {% if vacancy %}
-                {% for object in vacancy %}
-                  <li>
-                    <a href="{% url 'employer:vacancy_detail' pk=object.pk %}">Vacancy ID {{ object }}</a>
-                  </li>
+    <div class="container">
+      <div class="tab-content" id="myTabContent">
+        <!-- My vacancy tab 1 -->
+        <div class="tab-pane fade show active" id="company" role="tabpanel" aria-labelledby="company-tab-{{ company.pk }}">
+
+            <!-- My vacancy card 1 -->
+            <div class="card mb-lg-4">
+              <div class="card-header">
+                <h3>My Vacancies</h3>
+                <a class="btn btn-outline-primary" href="{% url 'employer:vacancy_create' %}" role="button">Create New Vacancy</a>
+              </div>
+              <div class="card-body">
+                {% if companies %}
+                {% for company in companies|in_user_category:user %}
+                  {% if vacancies %}
+                    {% for job in vacancies|in_company_category:company %}
+                      <li>
+                        <a href="{% url 'employer:vacancy_detail' pk=job.pk %}">{{ job }}</a>
+                      </li>
+                    {% endfor %}
+                  {% else %}
+                    <p>No vacancies so far</p>
+                  {% endif %}
                 {% endfor %}
               {% else %}
-                <p>No vacancies so far</p>
+                <p>No companies so far</p>
               {% endif %}
+              </div>
             </div>
-          </div>
-          <!-- End Card -->
+            <!-- End Card -->
+
         </div>
       </div>
     </div>
+    <!-- End Container for Vacancies -->
 
-  </div>
-  <!-- End Container for Vacancies -->
+
+
+
+{#  {% include "employer/includes/inc_vacancies.html" %}#}
 
 {% endblock %}

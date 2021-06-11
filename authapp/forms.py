@@ -14,10 +14,6 @@ class InfojobUserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(InfojobUserLoginForm, self).__init__(*args, **kwargs)
 
-        # widgets = {
-        #     'email': forms.TextInput(attrs={'class': 'form-input'})
-        # }
-
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 

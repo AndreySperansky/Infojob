@@ -1,0 +1,62 @@
+{% extends 'employer/base.html' %}
+{% load static %}
+{% load filter_tags %}
+
+{% block content %}
+
+
+  <!-- Container for BradCrumbs-->
+
+  <div class="container ">
+    <nav aria-label="breadcrumb ">
+      <ol class="breadcrumb alert alert-success">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">responses /</li>
+      </ol>
+    </nav>
+  </div>
+
+
+  <div class="container mb-lg-4 mt-lg-4">
+    <div class="col-md-12 mb-4">
+      <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
+               width="60"> {{ user.first_name|default:'Noname' }} (Employer)</h2>
+      <hr>
+    </div>
+  </div>
+
+
+  <!-- Tabbar -->
+  <div class="container">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employer:employer' %}">Dash</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'employer:cvs' %}">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'employer:bookmarks' %}">Bookmarks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Response</a>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- Container for ...-->
+
+  <div class="container">
+    <div class="col-12 mb-3">
+      {% if bookmarks %}
+        {% include "employer/includes/inc_response_table.html" %}
+      {% else %}
+        <p class="no-books text-primary">Nothing To Search.</p>
+      {% endif %}
+    </div>
+
+  </div>
+
+
+{% endblock %}

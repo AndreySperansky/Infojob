@@ -1,4 +1,4 @@
-from bootstrap_modal_forms.generic import BSModalDeleteView
+from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalCreateView, BSModalUpdateView, BSModalReadView
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseRedirect
@@ -9,7 +9,7 @@ from django.views.generic.detail import DetailView
 # from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 # from .forms import *
-from .forms import CVFilterForm
+from .forms import CVFilterForm, VacancyCreateForm, ResponseCreateForm
 from .models import *
 from employee.models import *
 # from django.db import transaction
@@ -22,15 +22,27 @@ class HomepageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['company'] = Company.objects.order_by('id')
-        context['vacancy'] = Vacancy.objects.order_by('id')
+        context['companies'] = Company.objects.filter(user=self.request.user)
+        context['vacancies'] = Vacancy.objects.order_by('id')
         return context
+
+    def get_queryset(self):
+        return Company.objects.filter(user=self.request.user)
 
 
 
 #############################################################################################
 #             Companies Views
 #############################################################################################
+
+
+class CompanyList(ListView):
+    model = Company
+    context_object_name = 'companies'
+
+    def get_queryset(self):
+        return Company.objects.filter(user=self.request.user)
+
 
 
 class CompanyDetail(LoginRequiredMixin, DetailView):
@@ -73,7 +85,7 @@ class CompanyDelete(LoginRequiredMixin, DeleteView):
 
 
 #############################################################################################
-#             Companies Views
+#             Vacancies Views
 #############################################################################################
 
 
@@ -87,7 +99,8 @@ class VacancyDetail(LoginRequiredMixin, DetailView):
 class VacancyCreate(LoginRequiredMixin, CreateView):
     model = Vacancy
     template_name = 'employer/vacancy_create.html'
-    fields = ['company', 'position', 'city', 'duties', 'compensation', 'is_active']
+    form_class = VacancyCreateForm
+    # fields = ['company', 'position', 'city', 'duties', 'compensation', 'is_active']
     success_url = None
 
     def form_valid(self, form):
@@ -96,6 +109,14 @@ class VacancyCreate(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy('employer:vacancy_detail', kwargs={'pk': self.object.pk})
+
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display companies that belong to a given user"""
+
+        kwargs = super(VacancyCreate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
 class VacancyUpdate(LoginRequiredMixin, UpdateView):
@@ -184,11 +205,6 @@ def add_remove_bookmark(request, pk):
 
 
 
-class CvResponseView(View):
-    pass
-
-
-
 class CvDetailView(DetailView):
     model = CV
     template_name = 'employer/cv_detail.html'
@@ -228,12 +244,99 @@ def cv_bookmarks(request):
         return JsonResponse(data)
 
 
-
-
-
 class BookmarkDeleteView(BSModalDeleteView):
     model = BookmarkCV
     template_name = 'employer/delete_bookmark.html'
     success_message = 'Success: Bookmark was deleted.'
     success_url = reverse_lazy('employer:bookmarks')
+
+
+
+##########################################################################
+#                          Response views                                #
+##########################################################################
+
+def response(request):
+    user = request.user
+    data = dict()
+    if request.method == 'GET':
+        responses = Response.objects.filter(vacancy='')
+        data['table'] = render_to_string(
+            'employer/includes/inc_response_table.html',
+            {'responses': responses},
+            request=request
+        )
+        return JsonResponse(data)
+
+
+
+def response_list():
+    pass
+
+
+
+class ResponseCreate(BSModalCreateView):
+    template_name = 'employer/create_response.html'
+    form_class = ResponseCreateForm
+    # success_message = 'Отклик отпарвлен!'
+    success_url = reverse_lazy('employer:bookmarks')
+
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super(ResponseCreate, self).form_valid(form)
+    #
+    # def get_form_kwargs(self):
+    #     """ Passes the request object to the form class.
+    #      This is necessary to only display vacancies that belong to a given user"""
+    #
+    #     kwargs = super(ResponseCreate, self).get_form_kwargs()
+    #     kwargs['request'] = self.request
+    #     return kwargs
+
+
+# class BookUpdateView(BSModalUpdateView):
+#     model = Book
+#     template_name = 'employer/update_book.html'
+#     form_class = BookModelForm
+#     success_message = 'Success: Book was updated.'
+#     success_url = reverse_lazy('index')
+#
+#
+# class BookReadView(BSModalReadView):
+#     model = Book
+#     template_name = 'employer/read_book.html'
+#
+#
+# class BookDeleteView(BSModalDeleteView):
+#     model = Book
+#     template_name = 'employer/delete_book.html'
+#     success_message = 'Success: Book was deleted.'
+#     success_url = reverse_lazy('index')
+
+
+# def add_remove_response(request, pk1, pk2):
+#     # user = request.user
+#
+#     try:
+#         response = Response.objects.get(cv=pk1, vacancy=pk2)
+#         response.delete()
+#         res=False
+#     except:
+#         response = Response.objects.create(
+#             cv = CV.objects.get(pk=pk1),
+#             vacancy = Vacancy.objects.get(pk=pk2))
+#         response.save()
+#         res=True
+#
+#     data = {
+#         'res': res
+#     }
+#
+#     return JsonResponse(data, safe=False)
+#
+
+    # return HttpResponseRedirect(reverse('employee:vacancies'))
+    # в шаблон { % url 'employer:response' pk1 = cv.pk pk2 = vacancy.pk %}
+
+
 

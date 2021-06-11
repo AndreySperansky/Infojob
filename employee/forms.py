@@ -97,3 +97,5 @@ class VacancyFilterForm(forms.ModelForm):
     class Meta:
         model = Vacancy
         fields = ['position', 'compensation']
+
+
