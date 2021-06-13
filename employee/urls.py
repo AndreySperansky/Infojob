@@ -22,7 +22,7 @@ urlpatterns = [
     path('vacancy/filter/', JobFilterView.as_view(), name='job_filter'),
 
 
-    path('response/', ResponseView.as_view(), name='response'),
+    path('response/<int:pk>/', ResponseCreate.as_view(), name='job_response'),
     # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
     # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
     # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),

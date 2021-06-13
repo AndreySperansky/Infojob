@@ -9,9 +9,8 @@ $(function () {
               $(this).modalForm({formURL: $(this).data("form-url")});
           });
           
-          $(".response").each(function () {
+          $(".response-cv").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url")});
-              console.log("Hello from response!")
           });
           
           $(".delete-bookmark").each(function () {

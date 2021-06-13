@@ -19,17 +19,19 @@ class VacancyCreateForm(forms.ModelForm):
 
     class Meta:
         model = Vacancy
-        fields = ('__all__')
+        exclude = ('user', 'is_active', 'is_checked', 'employee_bookmarked')
+        # fields = ('__all__')
 
 
 
-class ResponseCreateForm(BSModalModelForm):
+class ResponseCreateForm(forms.ModelForm):
 
-    # def __init__(self,  *args, **kwargs):
-    #     self.request = kwargs.pop('request')
-    #     super(ResponseCreateForm, self).__init__(*args, **kwargs)
-    #     self.fields['vacancy'].queryset = Vacancy.objects.filter(user=self.request.user)
+    def __init__(self,  *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(ResponseCreateForm, self).__init__(*args, **kwargs)
+        self.fields['vacancy'].queryset = Vacancy.objects.filter(user=self.request.user)
 
     class Meta:
         model = Response
-        fields = ('__all__')
+        exclude = ('user',)
+        # fields = ('__all__')

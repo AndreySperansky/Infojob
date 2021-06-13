@@ -15,11 +15,11 @@ class CompanyAdmin(admin.ModelAdmin):
 
 class VacancyAdmin(admin.ModelAdmin):
     # какие поля будут отображаться в админке
-    list_display = ('id', 'company', 'position', 'city', 'compensation', 'is_active', 'created_at')
+    list_display = ('id', 'user', 'company', 'position', 'city', 'compensation', 'is_active', 'created_at')
     # какие поля будут ссылками на соответствующие модели
-    list_display_links = ('id', 'company')
+    list_display_links = ('id', 'user', 'company')
     # какие поля будут участвовать в поиске
-    search_fields = ('company', 'position', 'city', 'compensation')
+    search_fields = ( 'user', 'company', 'position', 'city', 'compensation')
 
 
 
@@ -36,11 +36,11 @@ class BookmarkVacancyAdmin(admin.ModelAdmin):
 
 class ResponseAdmin(admin.ModelAdmin):
     # какие поля будут отображаться в админке
-    list_display = ('id', 'cv', 'vacancy', 'message')
+    list_display = ('id', 'user', 'vacancy', 'message')
     # какие поля будут ссылками на соответствующие модели
-    list_display_links = ('id', 'cv', 'vacancy',)
+    list_display_links = ('id', 'user', 'vacancy',)
     # какие поля будут участвовать в поиске
-    search_fields = ('cv', 'vacancy',)
+    search_fields = ('user', 'vacancy',)
 
 
 

@@ -33,18 +33,23 @@ class Company(models.Model):
 
     @property
     def related_company(self):
-        '''
-        Filter up companies off users
-        '''
-        _companies = Company.objects.filter(user=self.user)
-        return _companies
+
+        companies = Company.objects.filter(user=self.user)
+        return companies
 
 
 
 
 class Vacancy(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='vacancy_fk' )
 
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='fk_user_vacancy',
+        verbose_name='создатель',
+        default = 1
+    )
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='vacancy_fk' )
     position = models.CharField(max_length=150, verbose_name='должность')
     city = models.CharField(max_length=150, verbose_name='город')
     duties = models.TextField(verbose_name='обязанности')
@@ -59,12 +64,12 @@ class Vacancy(models.Model):
         related_name='bookmark_holder',
         verbose_name='владелец закладки',
     )
-    response = models.ManyToManyField(
-        CV,
-        through='Response',
-        related_name='vacancy_cv',
-        verbose_name='резюме',
-    )
+    # response = models.ManyToManyField(
+    #     CV,
+    #     through='Response',
+    #     related_name='vacancy_cv',
+    #     verbose_name='резюме',
+    # )
 
 
 
@@ -84,6 +89,7 @@ class BookmarkVacancy(models.Model):
         on_delete=models.CASCADE,
         related_name='employee_concern',
         verbose_name='Соискатель')
+
     vacancy = models.ForeignKey(
         Vacancy,
         on_delete=models.CASCADE,
@@ -104,16 +110,20 @@ class BookmarkVacancy(models.Model):
 
 
 class Response(models.Model):
-    # user = models.ForeignKey(
-    #     settings.AUTH_USER_MODEL,
-    #     on_delete=models.CASCADE,
-    #     related_name='user',)
+    ACCEPT = 1
+    REJECT = 2
 
-    cv = models.ForeignKey(
-        CV,
+    RESPONSE_TYPES = (
+        (ACCEPT, 'Заинтересован'),
+        (REJECT, 'Не интересно'),
+    )
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='fk_cv',
-        verbose_name='Резюме')
+        related_name='fk_user',
+        verbose_name='создатель',
+    )
 
     vacancy = models.ForeignKey(
         Vacancy,
@@ -121,15 +131,17 @@ class Response(models.Model):
         related_name='fk_vacancy',
         verbose_name='Вакансия')
 
+    response_type = models.PositiveSmallIntegerField(choices=RESPONSE_TYPES, blank=True, null=True)
+
     message = models.TextField(verbose_name='сообщение', blank=True)
 
 
     def __str__(self):
-        return f'{self.vacancy.position}, {self.vacancy.company}: ' \
-               f'{self.cv.position_seek}, {self.cv.first_name} {self.cv.family_name}'
+        return f'{self.vacancy.position}, {self.vacancy.company}'
+
 
 
     class Meta:
         verbose_name = 'Отклик'
         verbose_name_plural = 'Отклики'
-        ordering = ['vacancy', 'cv']
+        ordering = ['vacancy', ]

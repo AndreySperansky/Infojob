@@ -5,7 +5,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Fieldset, Div, Row, HTML, ButtonHolder, Submit, Column
 from .custom_layout_object import Formset
 from django import forms
-from .models import CV, JobExp
+from .models import CV, JobExp, ResponseCV
 from employer.models import Vacancy
 
 import re
@@ -99,3 +99,16 @@ class VacancyFilterForm(forms.ModelForm):
         fields = ['position', 'compensation']
 
 
+
+
+class ResponseCreateForm(forms.ModelForm):
+
+    def __init__(self,  *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super(ResponseCreateForm, self).__init__(*args, **kwargs)
+        self.fields['cv'].queryset = CV.objects.filter(user=self.request.user)
+
+    class Meta:
+        model = ResponseCV
+        exclude = ('user',)
+        # fields = ('__all__')

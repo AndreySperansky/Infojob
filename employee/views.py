@@ -1,4 +1,4 @@
-from bootstrap_modal_forms.generic import BSModalDeleteView
+from bootstrap_modal_forms.generic import BSModalDeleteView, BSModalCreateView
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
@@ -6,8 +6,8 @@ from django.views.generic import TemplateView, View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-from .forms import CollectionTitleFormSet, CollectionForm, VacancyFilterForm
-from .models import CV, JobExp
+from .forms import CollectionTitleFormSet, CollectionForm, VacancyFilterForm, ResponseCreateForm
+from .models import CV, JobExp, ResponseCV
 from employer.models import Vacancy, BookmarkVacancy
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
@@ -231,35 +231,24 @@ class BookmarkDeleteView(BSModalDeleteView):
 ##########################################################################
 
 
-class ResponseView(View):
-    pass
+
+class ResponseCreate(BSModalCreateView):
+    model = ResponseCV
+    template_name = 'employer/create_response.html'
+    form_class = ResponseCreateForm
+    # success_message = 'Отклик отпарвлен!'
+    success_url = reverse_lazy('employer:bookmarks')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ResponseCreate, self).form_valid(form)
 
 
-def add_remove_response(request, pk):
-    user = request.user
-
-    try:
-        bookmark = BookmarkVacancy.objects.get(employee=user, vacancy=pk)
-        bookmark.delete()
-        res=False
-    except:
-        bookmark = BookmarkVacancy.objects.create(
-            employee=user,
-            vacancy=Vacancy.objects.get(id=pk))
-        bookmark.save()
-        res=True
-
-    data = {
-        'res': res
-    }
-
-    return JsonResponse(data, safe=False)
-    # return HttpResponseRedirect(reverse('employee:vacancies'))
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display vacancies that belong to a given user"""
+        kwargs = super(ResponseCreate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
 
 
-def response_list():
-    pass
-
-
-def reject_response():
-    pass

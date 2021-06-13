@@ -25,7 +25,7 @@ urlpatterns = [
     path('cv/filter/', CvFilterView.as_view(), name='cv_filter'),
 
     # path('response/', ResponseView.as_view(), name='responses'),
-    path('response/', ResponseCreate.as_view(), name='response'),
+    path('response/<int:pk>/', ResponseCreate.as_view(), name='response'),
     # path('response/list/', response_list, name='response_list'),
     # path('response/<int:pk>/', add_remove_response, name='add_response'),
     # path('response/read/<int:pk>/', ResponseView.as_view(), name='read_response'),

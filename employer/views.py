@@ -100,7 +100,6 @@ class VacancyCreate(LoginRequiredMixin, CreateView):
     model = Vacancy
     template_name = 'employer/vacancy_create.html'
     form_class = VacancyCreateForm
-    # fields = ['company', 'position', 'city', 'duties', 'compensation', 'is_active']
     success_url = None
 
     def form_valid(self, form):
@@ -276,22 +275,24 @@ def response_list():
 
 
 class ResponseCreate(BSModalCreateView):
+    model = Response
     template_name = 'employer/create_response.html'
     form_class = ResponseCreateForm
     # success_message = 'Отклик отпарвлен!'
     success_url = reverse_lazy('employer:bookmarks')
 
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super(ResponseCreate, self).form_valid(form)
-    #
-    # def get_form_kwargs(self):
-    #     """ Passes the request object to the form class.
-    #      This is necessary to only display vacancies that belong to a given user"""
-    #
-    #     kwargs = super(ResponseCreate, self).get_form_kwargs()
-    #     kwargs['request'] = self.request
-    #     return kwargs
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(ResponseCreate, self).form_valid(form)
+
+
+    def get_form_kwargs(self):
+        """ Passes the request object to the form class.
+         This is necessary to only display vacancies that belong to a given user"""
+        kwargs = super(ResponseCreate, self).get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
 
 
 # class BookUpdateView(BSModalUpdateView):
