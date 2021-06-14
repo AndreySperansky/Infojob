@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CV, BookmarkCV
+from .models import CV, BookmarkCV, ResponseCV
 
 class CvAdmin(admin.ModelAdmin):
     # какие поля будут отображаться в админке
@@ -24,3 +24,16 @@ class BookmarkCVAdmin(admin.ModelAdmin):
 
 
 admin.site.register(BookmarkCV, BookmarkCVAdmin)
+
+
+class ResponseCVAdmin(admin.ModelAdmin):
+    # какие поля будут отображаться в админке
+    list_display = ('id', 'user', 'cv', 'message')
+    # какие поля будут ссылками на соответствующие модели
+    list_display_links = ('id', 'user', 'cv',)
+    # какие поля будут участвовать в поиске
+    search_fields = ('user', 'cv',)
+
+
+admin.site.register(ResponseCV, ResponseCVAdmin)
+

@@ -24,6 +24,7 @@ class VacancyCreateForm(forms.ModelForm):
 
 
 
+
 class ResponseCreateForm(forms.ModelForm):
 
     def __init__(self,  *args, **kwargs):

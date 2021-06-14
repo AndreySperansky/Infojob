@@ -121,14 +121,12 @@ class Response(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='fk_user',
         verbose_name='создатель',
     )
 
     vacancy = models.ForeignKey(
         Vacancy,
         on_delete=models.CASCADE,
-        related_name='fk_vacancy',
         verbose_name='Вакансия')
 
     response_type = models.PositiveSmallIntegerField(choices=RESPONSE_TYPES, blank=True, null=True)
@@ -137,11 +135,10 @@ class Response(models.Model):
 
 
     def __str__(self):
-        return f'{self.vacancy.position}, {self.vacancy.company}'
-
+        return f'{self.vacancy.position}'
 
 
     class Meta:
         verbose_name = 'Отклик'
-        verbose_name_plural = 'Отклики'
-        ordering = ['vacancy', ]
+        verbose_name_plural = 'Отклики работодателя'
+        ordering = ['vacancy',]

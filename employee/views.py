@@ -234,14 +234,15 @@ class BookmarkDeleteView(BSModalDeleteView):
 
 class ResponseCreate(BSModalCreateView):
     model = ResponseCV
-    template_name = 'employer/create_response.html'
+    template_name = 'employee/create_response.html'
     form_class = ResponseCreateForm
     # success_message = 'Отклик отпарвлен!'
-    success_url = reverse_lazy('employer:bookmarks')
+    # success_url = reverse_lazy('employer:bookmarks')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(ResponseCreate, self).form_valid(form)
+
 
 
     def get_form_kwargs(self):

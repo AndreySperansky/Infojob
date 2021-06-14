@@ -255,6 +255,13 @@ class BookmarkDeleteView(BSModalDeleteView):
 #                          Response views                                #
 ##########################################################################
 
+class ResponseView(ListView):
+    model = BookmarkCV
+    context_object_name = 'responses'
+    template_name = "employer/response.html"
+
+
+
 def response(request):
     user = request.user
     data = dict()
@@ -269,17 +276,13 @@ def response(request):
 
 
 
-def response_list():
-    pass
-
-
 
 class ResponseCreate(BSModalCreateView):
     model = Response
     template_name = 'employer/create_response.html'
     form_class = ResponseCreateForm
     # success_message = 'Отклик отпарвлен!'
-    success_url = reverse_lazy('employer:bookmarks')
+    # success_url = reverse_lazy('employer:bookmarks')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -292,6 +295,12 @@ class ResponseCreate(BSModalCreateView):
         kwargs = super(ResponseCreate, self).get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
+
+
+
+
+
+
 
 
 
