@@ -38,8 +38,6 @@ class Company(models.Model):
         return companies
 
 
-
-
 class Vacancy(models.Model):
 
     user = models.ForeignKey(
@@ -64,12 +62,12 @@ class Vacancy(models.Model):
         related_name='bookmark_holder',
         verbose_name='владелец закладки',
     )
-    # response = models.ManyToManyField(
-    #     CV,
-    #     through='Response',
-    #     related_name='vacancy_cv',
-    #     verbose_name='резюме',
-    # )
+    response = models.ManyToManyField(
+        CV,
+        through='Response',
+        related_name='vacancy_cv',
+        verbose_name='резюме',
+    )
 
 
 
@@ -114,8 +112,8 @@ class Response(models.Model):
     REJECT = 2
 
     RESPONSE_TYPES = (
-        (ACCEPT, 'Заинтересован'),
-        (REJECT, 'Не интересно'),
+        (ACCEPT, 'Accepted'),
+        (REJECT, 'Rejected'),
     )
 
     user = models.ForeignKey(
@@ -127,7 +125,13 @@ class Response(models.Model):
     vacancy = models.ForeignKey(
         Vacancy,
         on_delete=models.CASCADE,
-        verbose_name='Вакансия')
+        related_name='fk_vacancy',
+        verbose_name='Вакансия',)
+
+    cv = models.ForeignKey(
+        CV,
+        on_delete=models.CASCADE,
+        verbose_name='Резюме',)
 
     response_type = models.PositiveSmallIntegerField(choices=RESPONSE_TYPES, blank=True, null=True)
 

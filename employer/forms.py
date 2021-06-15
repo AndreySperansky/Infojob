@@ -34,5 +34,5 @@ class ResponseCreateForm(forms.ModelForm):
 
     class Meta:
         model = Response
-        exclude = ('user',)
+        exclude = ('user', 'cv')
         # fields = ('__all__')

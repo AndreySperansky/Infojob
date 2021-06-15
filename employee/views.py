@@ -7,8 +7,8 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from .forms import CollectionTitleFormSet, CollectionForm, VacancyFilterForm, ResponseCreateForm
-from .models import CV, JobExp, ResponseCV
-from employer.models import Vacancy, BookmarkVacancy
+from .models import CV
+from employer.models import Vacancy, BookmarkVacancy, Response
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 
@@ -230,18 +230,43 @@ class BookmarkDeleteView(BSModalDeleteView):
 #                          Response views                                #
 ##########################################################################
 
+class ResponseList(ListView):
+    model = Response
+    context_object_name = 'responses'
+    template_name = "employee/response.html"
+
+
+def response(request):
+    user = request.user
+    data = dict()
+    if request.method == 'GET':
+        # responses = Response.objects.filter(cv='')
+        responses = Response.objects.all()
+        data['table'] = render_to_string(
+            'employer/includes/inc_response_table.html',
+            {'responses': responses},
+            request=request
+        )
+        return JsonResponse(data)
+
 
 
 class ResponseCreate(BSModalCreateView):
-    model = ResponseCV
+    model = Response
     template_name = 'employee/create_response.html'
     form_class = ResponseCreateForm
     # success_message = 'Отклик отпарвлен!'
-    # success_url = reverse_lazy('employer:bookmarks')
+    success_url = reverse_lazy('employee:bookmarks')
+
 
     def form_valid(self, form):
+        form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        form.instance.vacancy = Vacancy.objects.get(pk=self.kwargs['pk'])
+        form.instance.save()
         return super(ResponseCreate, self).form_valid(form)
+
+
 
 
 

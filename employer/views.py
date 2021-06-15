@@ -238,7 +238,7 @@ def cv_bookmarks(request):
         data['table'] = render_to_string(
             'employer/includes/inc_bookmarks_table.html',
             {'bookmarks': bookmarks},
-            request=request
+            request=request,
         )
         return JsonResponse(data)
 
@@ -256,17 +256,18 @@ class BookmarkDeleteView(BSModalDeleteView):
 ##########################################################################
 
 class ResponseView(ListView):
-    model = BookmarkCV
+    model = Response
     context_object_name = 'responses'
     template_name = "employer/response.html"
 
 
 
-def response(request):
-    user = request.user
+def responses(request):
+    # user = request.user
     data = dict()
     if request.method == 'GET':
-        responses = Response.objects.filter(vacancy='')
+        # responses = Response.objects.filter(vacancy='')
+        responses = Response.objects.all()
         data['table'] = render_to_string(
             'employer/includes/inc_response_table.html',
             {'responses': responses},
@@ -283,9 +284,14 @@ class ResponseCreate(BSModalCreateView):
     form_class = ResponseCreateForm
     # success_message = 'Отклик отпарвлен!'
     # success_url = reverse_lazy('employer:bookmarks')
+    success_url = reverse_lazy('employer:bookmarks')
+
 
     def form_valid(self, form):
+        form.instance = form.save(commit=False)
         form.instance.user = self.request.user
+        form.instance.cv = CV.objects.get(pk=self.kwargs['pk'])
+        form.instance.save()
         return super(ResponseCreate, self).form_valid(form)
 
 
@@ -297,31 +303,17 @@ class ResponseCreate(BSModalCreateView):
         return kwargs
 
 
+class ResponseDelete(BSModalDeleteView):
+    model = Response
+    template_name = 'employer/delete_response.html'
+    success_message = 'Success: Response was deleted.'
+    success_url = reverse_lazy('employer:responses')
 
 
-
-
-
-
-
-# class BookUpdateView(BSModalUpdateView):
-#     model = Book
-#     template_name = 'employer/update_book.html'
-#     form_class = BookModelForm
-#     success_message = 'Success: Book was updated.'
-#     success_url = reverse_lazy('index')
-#
 #
 # class BookReadView(BSModalReadView):
 #     model = Book
 #     template_name = 'employer/read_book.html'
-#
-#
-# class BookDeleteView(BSModalDeleteView):
-#     model = Book
-#     template_name = 'employer/delete_book.html'
-#     success_message = 'Success: Book was deleted.'
-#     success_url = reverse_lazy('index')
 
 
 # def add_remove_response(request, pk1, pk2):

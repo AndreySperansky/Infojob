@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+# from employer.models import Vacancy
 
 
 
@@ -99,38 +100,44 @@ class BookmarkCV(models.Model):
 
 
 
-class ResponseCV(models.Model):
-    ACCEPT = 1
-    REJECT = 2
-
-    RESPONSE_TYPES = (
-        (ACCEPT, 'Заинтересован'),
-        (REJECT, 'Не интересно'),
-    )
-
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='fk_user_cv',
-        verbose_name='создатель',
-    )
-
-    cv = models.ForeignKey(
-        CV,
-        on_delete=models.CASCADE,
-        related_name='fk_cv',
-        verbose_name='Вакансия')
-
-    response_type = models.PositiveSmallIntegerField(choices=RESPONSE_TYPES, blank=True, null=True)
-
-    message = models.TextField(verbose_name='сообщение', blank=True)
-
-
-    def __str__(self):
-        return f'{self.cv.position_seek}'
-
-
-    class Meta:
-        verbose_name = 'Отклик'
-        verbose_name_plural = 'Отклики соискателя'
-        ordering = ['cv',]
+# class ResponseCV(models.Model):
+#     ACCEPT = 1
+#     REJECT = 2
+#
+#     RESPONSE_TYPES = (
+#         (ACCEPT, 'Заинтересован'),
+#         (REJECT, 'Не интересно'),
+#     )
+#
+#     user = models.ForeignKey(
+#         settings.AUTH_USER_MODEL,
+#         on_delete=models.CASCADE,
+#         related_name='fk_user_cv',
+#         verbose_name='создатель',
+#     )
+#
+#     # vacancy = models.ForeignKey(
+#     #     Vacancy,
+#     #     on_delete=models.CASCADE,
+#     #     verbose_name='Вакансия', )
+#
+#
+#     cv = models.ForeignKey(
+#         CV,
+#         on_delete=models.CASCADE,
+#         related_name='fk_cv',
+#         verbose_name='Вакансия')
+#
+#     response_type = models.PositiveSmallIntegerField(choices=RESPONSE_TYPES, blank=True, null=True)
+#
+#     message = models.TextField(verbose_name='сообщение', blank=True)
+#
+#
+#     def __str__(self):
+#         return f'{self.cv.position_seek}'
+#
+#
+#     class Meta:
+#         verbose_name = 'Отклик'
+#         verbose_name_plural = 'Отклики соискателя'
+#         ordering = ['cv', ]

@@ -41,9 +41,6 @@
       <li class="nav-item">
         <a class="nav-link active" href="#">Response</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">MSG</a>
-      </li>
     </ul>
   </div>
 
@@ -57,8 +54,8 @@
 
   <div class="container">
     <div class="col-12 mb-3">
-      {% if cvs %}
-        {% include "employer/includes/inc_cv_table.html" %}
+      {% if responses %}
+        {% include "employer/includes/inc_response_table.html" %}
       {% else %}
         <p class="no-books text-primary">Nothing To Search.</p>
       {% endif %}

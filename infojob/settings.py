@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'authapp.apps.AuthappConfig',
     'employee.apps.EmployeeConfig',
     'employer.apps.EmployerConfig',
-    'msgapp.apps.MsgappConfig',
+    # 'response.apps.ResponseConfig',
     'widget_tweaks',
     'crispy_forms',
     'dynamic_formsets',

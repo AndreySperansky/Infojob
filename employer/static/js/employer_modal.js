@@ -19,8 +19,7 @@ $(function () {
               $(this).modalForm({formURL: $(this).data("form-url")});
               console.log("Hello from read!")
           });
-          
-          console.log("Hello from response!")
+
   
           $(".response").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url")});
@@ -28,6 +27,11 @@ $(function () {
           
           
           $(".delete-bookmark").each(function () {
+              $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+          });
+          
+          
+          $(".delete-response").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
           });
 

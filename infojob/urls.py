@@ -10,7 +10,7 @@ urlpatterns = [
     path('auth/', include('authapp.urls', namespace='auth')),
     path('employee/', include('employee.urls', namespace='employee')),
     path('employer/', include('employer.urls', namespace='employer')),
-    path('msg/', include('msgapp.urls', namespace='msg')),
+    # path('response/', include('response.urls', namespace='response')),
 ]
 
 if settings.DEBUG:      # т.е. если DEBUG = True

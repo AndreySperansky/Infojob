@@ -16,6 +16,10 @@ $(function () {
           $(".delete-bookmark").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
           });
+          
+          $(".delete-response").each(function () {
+              $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
+          });
 
           // Hide message
           // $(".alert").fadeTo(2000, 500).slideUp(500, function () {

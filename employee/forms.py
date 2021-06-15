@@ -5,8 +5,8 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Fieldset, Div, Row, HTML, ButtonHolder, Submit, Column
 from .custom_layout_object import Formset
 from django import forms
-from .models import CV, JobExp, ResponseCV
-from employer.models import Vacancy
+from .models import CV, JobExp
+from employer.models import Vacancy, Response
 
 import re
 
@@ -109,6 +109,6 @@ class ResponseCreateForm(forms.ModelForm):
         self.fields['cv'].queryset = CV.objects.filter(user=self.request.user)
 
     class Meta:
-        model = ResponseCV
-        exclude = ('user',)
+        model = Response
+        exclude = ('user', 'vacancy')
         # fields = ('__all__')

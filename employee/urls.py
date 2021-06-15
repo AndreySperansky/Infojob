@@ -23,7 +23,8 @@ urlpatterns = [
 
 
     path('response/<int:pk>/', ResponseCreate.as_view(), name='job_response'),
-    # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
+    path('response/', ResponseList.as_view(), name='response_list'),
+    # path('response/list/', vacancy_responses, name='response_list'),
     # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
     # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
 ]
