@@ -115,21 +115,21 @@ class CollectionDelete(DeleteView):
 ##########################################################################
 
 
-class JobFilterView(FormView):
-    template_name = 'employer/includes/inc_filter_cv.html'
+class JobFilter(FormView):
+    template_name = 'employee/filter.html'
     form_class = VacancyFilterForm
 
     def form_valid(self, form):
         if '' in self.request.POST:
             self.filter = ''
         else:
-            self.filter = '?position_seek=' + form.cleaned_data['position_seek']
+            self.filter = '?position=' + form.cleaned_data['position']
 
         response = super().form_valid(form)
         return response
 
     def get_success_url(self):
-        return reverse_lazy('employee:job_list') + self.filter   # Add URL!!!
+        return reverse_lazy('employee:vacancies') + self.filter   # Add URL!!!
 
 
 
@@ -140,8 +140,8 @@ class SearchView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if 'type' in self.request.GET:
-            qs = qs.filter(job_type=int(self.request.GET['type']))
+        if 'position' in self.request.GET:
+            qs = qs.filter(position = self.request.GET['position'])
         return qs
 
 
@@ -196,12 +196,17 @@ class BookmarkView(ListView):
     model = BookmarkVacancy
     context_object_name = 'bookmarks'
     template_name = "employee/bookmarks.html"
+    def get_context_data(self, **kwargs):
+        context = super(BookmarkView, self).get_context_data(**kwargs)
+        context['title'] = 'Закладки'
+        return context
 
 
     def get_queryset(self):
+
         qs = super().get_queryset()
-        if 'type' in self.request.GET:
-            qs = qs.filter(bookmark_type=int(self.request.GET['type']))
+        user = self.request.user
+        qs = qs.filter(employee=user)
         return qs
 
 
@@ -209,7 +214,7 @@ def job_bookmarks(request):
     user = request.user
     data = dict()
     if request.method == 'GET':
-        bookmarks = BookmarkVacancy.objects.filter(employee=user)
+        bookmarks = BookmarkVacancy.objects.all()
         data['table'] = render_to_string(
             'employee/includes/inc_bookmarks_table.html',
             {'bookmarks': bookmarks},
@@ -230,20 +235,31 @@ class BookmarkDeleteView(BSModalDeleteView):
 #                          Response views                                #
 ##########################################################################
 
-class ResponseList(ListView):
+class ResponseView(ListView):
     model = Response
     context_object_name = 'responses'
     template_name = "employee/response.html"
 
+    def get_queryset(self):
 
-def response(request):
-    user = request.user
+        qs = super().get_queryset()
+        user = self.request.user
+        # qs = qs.exclude(user=user)
+        qs = qs.exclude(user=user).filter(cv__user = user)
+        return qs
+
+    def get_context_data(self,  *args, **kwargs):
+        context = super(ResponseView, self).get_context_data(**kwargs)
+        context['title'] = 'Отклики'
+        return context
+
+
+def responses(request):
     data = dict()
     if request.method == 'GET':
-        # responses = Response.objects.filter(cv='')
         responses = Response.objects.all()
         data['table'] = render_to_string(
-            'employer/includes/inc_response_table.html',
+            'employee/includes/inc_response_table.html',
             {'responses': responses},
             request=request
         )
@@ -267,9 +283,6 @@ class ResponseCreate(BSModalCreateView):
         return super(ResponseCreate, self).form_valid(form)
 
 
-
-
-
     def get_form_kwargs(self):
         """ Passes the request object to the form class.
          This is necessary to only display vacancies that belong to a given user"""
@@ -278,3 +291,8 @@ class ResponseCreate(BSModalCreateView):
         return kwargs
 
 
+class ResponseDelete(BSModalDeleteView):
+    model = Response
+    template_name = 'employee/delete_response.html'
+    success_message = 'Success: Response was deleted.'
+    success_url = reverse_lazy('employee:responses')

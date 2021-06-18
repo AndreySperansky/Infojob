@@ -2,8 +2,9 @@
 {% load static %}
 {% load filter_tags %}
 
-{% block content %}
+{% block title %} {{ title|title }} {% endblock %}
 
+{% block content %}
 
   <!-- Container for BradCrumbs-->
 
@@ -19,7 +20,7 @@
   <div class="container mb-lg-4 mt-lg-4">
     <div class="col-md-12 mb-4">
       <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
-               width="50"> {{ user.first_name|default:'Noname' }} (Employee)</h2>
+               width="50"> {{ user.first_name|default:user.username }} (Employee)</h2>
       <hr>
     </div>
   </div>
@@ -37,15 +38,10 @@
         <a class="nav-link" href="{% url 'employee:vacancies' %}">Search</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Bookmarks</a>
-{#        <a class="nav-link" href="{% url 'employee:job_bookmark' %}">Bookmarks</a>#}
+        <a class="nav-link" href="{% url 'employee:bookmarks' %}">Bookmarks</a>
       </li>
       <li class="nav-item">
         <a class="nav-link active" href="#">Response</a>
-{#        <a class="nav-link active" href="{% url 'employee:job_response' %}">Response</a>#}
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">MSG</a>
       </li>
     </ul>
   </div>
@@ -54,8 +50,8 @@
   <!-- Container for Vacancies Table-->
   <div class="container">
     <div class="col-12 mb-3">
-      {% if jobs %}
-        {% include "employee/includes/inc_vacancy_table.html" %}
+      {% if responses %}
+        {% include "employee/includes/inc_response_table.html" %}
       {% else %}
         <p class="no-books text-primary">Nothing To Search.</p>
       {% endif %}

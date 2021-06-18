@@ -2,9 +2,9 @@
   <thead>
   <tr>
     <th class="text-center" scope="col">#</th>
-    <th class="text-center" scope="col">Response On Resume</th>
-    <th class="text-center" scope="col">Vacancy</th>
+    <th class="text-center" scope="col">Response On Vacancy</th>
     <th class="text-center" scope="col">Company</th>
+    <th class="text-center" scope="col">CV</th>
     <th class="text-center" scope="col">Read / Response / Delete</th>
   </tr>
   </thead>
@@ -13,8 +13,8 @@
     {% csrf_token %}
     <tr>
       <th class="text-center" scope="row">{{ forloop.counter }}</th>
-      <td class="text-center">{{ response.cv.position_seek }}</td>
       <td class="text-center">{{ response.vacancy.position }}</td>
+      <td class="text-center">{{ response.cv.position_seek }}</td>
       <td class="text-center">{{ response.vacancy.company }}</td>
       <td class="text-center">
         <!-- Read buttons -->
@@ -27,7 +27,7 @@
 {#                data-form-url="{% url 'employer:cv_response' response.pk %}">#}
           <i class="fas fa-share-square"></i>
         </button>
-        <!-- Bookmark buttons delete -->
+        <!-- Response buttons delete -->
         <button type="button" class="bs-modal delete-response btn btn-sm btn-danger"
                 data-form-url="{% url 'employer:delete_response' response.pk %}">
           <i class="fas fa-trash"></i>

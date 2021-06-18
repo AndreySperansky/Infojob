@@ -62,7 +62,7 @@ class Vacancy(models.Model):
         related_name='bookmark_holder',
         verbose_name='владелец закладки',
     )
-    response = models.ManyToManyField(
+    cv_response = models.ManyToManyField(
         CV,
         through='Response',
         related_name='vacancy_cv',
@@ -139,7 +139,7 @@ class Response(models.Model):
 
 
     def __str__(self):
-        return f'{self.vacancy.position}'
+        return f'{self.vacancy.position}, {self.cv.position_seek}, {self.user}'
 
 
     class Meta:

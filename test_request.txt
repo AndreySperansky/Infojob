@@ -1,0 +1,10 @@
+from employer.models import Response
+from authapp.models import InfojobUser
+from employer.models import CV
+user = InfojobUser.objects.get(id=12)
+qs = Response.objects.exclude(user_id=12)
+qs1 = Response.objects.exclude(user_id=user)
+res = Response.objects.filter(cv__user = 12)
+res12 = Response.objects.filter(cv__user = 12).exclude(user_id=12)
+res12 = Response.objects.exclude(user_id=12).filter(cv__user = 12)
+res_12 = Response.objects.exclude(user_id=user).filter(cv__user = user)

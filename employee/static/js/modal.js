@@ -20,6 +20,11 @@ $(function () {
           $(".delete-response").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
           });
+          
+          // Filter button
+          $("#filter-book").each(function () {
+              $(this).modalForm({formURL: $(this).data("form-url")});
+          });
 
           // Hide message
           // $(".alert").fadeTo(2000, 500).slideUp(500, function () {

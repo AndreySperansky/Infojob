@@ -234,7 +234,7 @@ def cv_bookmarks(request):
     user = request.user
     data = dict()
     if request.method == 'GET':
-        bookmarks = BookmarkVacancy.objects.filter(employer=user)
+        bookmarks = BookmarkCV.objects.filter(employer=user)
         data['table'] = render_to_string(
             'employer/includes/inc_bookmarks_table.html',
             {'bookmarks': bookmarks},
@@ -259,15 +259,18 @@ class ResponseView(ListView):
     model = Response
     context_object_name = 'responses'
     template_name = "employer/response.html"
-
+    def get_context_data(self,  **kwargs):
+        context = super(ResponseView, self).get_context_data(**kwargs)
+        context['title'] = 'Отклики'
+        return context
 
 
 def responses(request):
-    # user = request.user
+    user = request.user
     data = dict()
     if request.method == 'GET':
-        # responses = Response.objects.filter(vacancy='')
-        responses = Response.objects.all()
+        responses = Response.objects.filter(vacancy_id=1)
+#         # responses = Response.objects.all()
         data['table'] = render_to_string(
             'employer/includes/inc_response_table.html',
             {'responses': responses},

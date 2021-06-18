@@ -36,11 +36,11 @@ class BookmarkVacancyAdmin(admin.ModelAdmin):
 
 class ResponseAdmin(admin.ModelAdmin):
     # какие поля будут отображаться в админке
-    list_display = ('id', 'user', 'vacancy', 'message')
+    list_display = ('id', 'user', 'vacancy', 'cv', )
     # какие поля будут ссылками на соответствующие модели
-    list_display_links = ('id', 'user', 'vacancy',)
+    list_display_links = ('id', 'user', 'cv', 'vacancy',)
     # какие поля будут участвовать в поиске
-    search_fields = ('user', 'vacancy',)
+    search_fields = ('user', 'cv', 'vacancy',)
 
 
 

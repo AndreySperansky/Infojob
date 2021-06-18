@@ -16,12 +16,20 @@
     </nav>
   </div>
 
-  <div class="container mb-lg-4 mt-lg-4">
-    <div class="col-md-12 mb-4">
-      <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
-               width="50"> {{ user.first_name|default:'Noname' }} (Employee)</h2>
-      <hr>
-    </div>
+  <div class="container mb-lg-2 mt-lg-4">
+    <div class="row">
+      <div class="col-md-6 mb-2">
+        <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
+                 width="50"> {{ user.first_name|default:'Noname' }} (Employee)
+        </h2>
+      </div>
+      <div class="col-md-6">
+        <button id="filter-book" class="filter-book btn btn-primary float-right" type="button" name="button"
+              data-form-url="{% url 'employee:job_filter' %}">
+          <span class="fa fa-filter mr-2"></span>Filter Vacancies
+        </button>
+      </div>
+    </div><hr>
   </div>
 
 
@@ -40,15 +48,21 @@
         <a class="nav-link" href="{% url 'employee:bookmarks' %}">Bookmarks</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'employee:response_list' %}">Response</a>
+        <a class="nav-link" href="{% url 'employee:responses' %}">Response</a>
       </li>
     </ul>
+
   </div>
 
 
   <!-- Container for Vacancies Table-->
   <div class="container">
     <div class="col-12 mb-3">
+
+      {% if 'position' in request.GET %}
+        <p class="filtered-books">Filtered books.</p>
+      {% endif %}
+
       {% if jobs %}
         {% include "employee/includes/inc_vacancy_table.html" %}
       {% else %}

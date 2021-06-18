@@ -19,12 +19,11 @@ urlpatterns = [
     path('vacancy/bookmark/<int:pk>', add_remove_bookmark, name='job_bookmark'),
     path('vacancy/delete/<int:pk>', BookmarkDeleteView.as_view(), name='delete_bookmark'),
     path('vacancy/read/<int:pk>', JobDetailView.as_view(), name='job_read'),
-    path('vacancy/filter/', JobFilterView.as_view(), name='job_filter'),
+    path('vacancy/filter/', JobFilter.as_view(), name='job_filter'),
 
 
-    path('response/<int:pk>/', ResponseCreate.as_view(), name='job_response'),
-    path('response/', ResponseList.as_view(), name='response_list'),
-    # path('response/list/', vacancy_responses, name='response_list'),
-    # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
-    # path('response/<int:pk>', JobResponseView.as_view(), name='job_response'),
+    path('response/<int:pk>/', ResponseCreate.as_view(), name='response'),
+    path('response/', ResponseView.as_view(), name='responses'),
+    path('response/list/', responses, name='response_list'),
+    path('response/delete/<int:pk>', ResponseDelete.as_view(), name='delete_response'),
 ]

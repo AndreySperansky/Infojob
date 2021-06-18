@@ -2,8 +2,8 @@
   <thead>
   <tr>
     <th class="text-center" scope="col">#</th>
+    <th class="text-center" scope="col">Response On CV</th>
     <th class="text-center" scope="col">Position</th>
-    <th class="text-center" scope="col">Vacancy</th>
     <th class="text-center" scope="col">Company</th>
     <th class="text-center" scope="col">Read / Response / Delete</th>
   </tr>
@@ -19,17 +19,17 @@
       <td class="text-center">
         <!-- Read buttons -->
         <button type="button" class="bs-modal read-bookmark btn btn-sm btn-primary"
-                data-form-url="{% url 'employer:cv_read' response.cv.pk %}">
+                data-form-url="{% url 'employee:job_read' response.vacancy.pk %}">
           <span class="fa fa-eye"></span>
         </button>
         <!-- Response buttons -->
-        <button type="button" class="response-cv btn btn-sm btn-outline-success">
-{#                data-form-url="{% url 'employer:cv_response' response.pk %}">#}
+        <button type="button" class="bs-modal response-cv btn btn-sm btn-outline-success"
+                data-form-url="{% url 'employee:response' response.pk %}">
           <i class="fas fa-share-square"></i>
         </button>
-        <!-- Bookmark buttons delete -->
-        <button type="button" class="bs-modal delete-bookmark btn btn-sm btn-danger"
-                data-form-url="{% url 'employer:delete_bookmark' response.pk %}">
+        <!-- Response buttons delete -->
+        <button type="button" class="bs-modal delete-response btn btn-sm btn-danger"
+                data-form-url="{% url 'employee:delete_response' response.pk %}">
           <i class="fas fa-trash"></i>
         </button>
       </td>
