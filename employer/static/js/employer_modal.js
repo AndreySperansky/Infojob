@@ -34,6 +34,11 @@ $(function () {
           $(".delete-response").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url"), isDeleteForm: true});
           });
+          
+           // Filter button
+          $("#filter").each(function () {
+              $(this).modalForm({formURL: $(this).data("form-url")});
+          });
 
           // Hide message
   

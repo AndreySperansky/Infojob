@@ -18,11 +18,19 @@
 
 
   <div class="container mb-lg-4 mt-lg-4">
-    <div class="col-md-12 mb-4">
-      <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
-               width="60"> {{ user.first_name|default:'Noname' }} (Employer)</h2>
-      <hr>
-    </div>
+    <div class="row">
+      <div class="col-md-6 mb-2">
+        <h2><img src="/media/{{ user.avatar|default:'avatars/avatar-placeholder2.png' }}" alt="..." class="rounded"
+                 width="60"> {{ user.first_name|default:'Noname' }} (Employer)
+        </h2>
+      </div>
+      <div class="col-md-6">
+        <button id="filter" class="filter btn btn-primary float-right" type="button" name="button"
+                data-form-url="{% url 'employer:cv_filter' %}">
+          <span class="fa fa-filter mr-2"></span>Filter Vacancies
+        </button>
+      </div>
+    </div><hr>
   </div>
 
 
@@ -35,7 +43,7 @@
       <li class="nav-item">
         <a class="nav-link active" href="{% url 'employer:cvs' %}">Search</a>
       </li>
-       <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'employer:bookmarks' %}">Bookmarks</a>
       </li>
       <li class="nav-item">
@@ -54,6 +62,11 @@
 
   <div class="container">
     <div class="col-12 mb-3">
+
+      {% if 'position_seek' in request.GET %}
+        <p class="filtered-books">Filtered CV.</p>
+      {% endif %}
+
       {% if cvs %}
         {% include "employer/includes/inc_cv_table.html" %}
       {% else %}

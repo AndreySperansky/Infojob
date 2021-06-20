@@ -22,7 +22,7 @@ $(function () {
           });
           
           // Filter button
-          $("#filter-book").each(function () {
+          $("#filter").each(function () {
               $(this).modalForm({formURL: $(this).data("form-url")});
           });
 

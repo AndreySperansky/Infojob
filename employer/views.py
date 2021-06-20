@@ -140,7 +140,7 @@ class VacancyDelete(LoginRequiredMixin, DeleteView):
 #############################################################################################
 
 class CvFilterView(FormView):
-    template_name = 'employer/includes/inc_filter_cv.html'
+    template_name = 'employer/filter.html'
     form_class = CVFilterForm
 
     def form_valid(self, form):
@@ -153,7 +153,7 @@ class CvFilterView(FormView):
         return response
 
     def get_success_url(self):
-        return reverse_lazy('employer:employer') + self.filter   # Add URL!!!
+        return reverse_lazy('employer:cvs') + self.filter   # Add URL!!!
 
 
 
@@ -164,8 +164,8 @@ class SearchView(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if 'type' in self.request.GET:
-            qs = qs.filter(cv_type=int(self.request.GET['type']))
+        if 'position_seek' in self.request.GET:
+            qs = qs.filter(position_seek=int(self.request.GET['position_seek']))
         return qs
 
 

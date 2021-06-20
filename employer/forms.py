@@ -6,8 +6,8 @@ from employer.models import Company, Vacancy, Response
 class CVFilterForm(forms.ModelForm):
 
     class Meta:
-        model = Vacancy
-        fields = ['position']
+        model = CV
+        fields = ['position_seek']
 
 
 class VacancyCreateForm(forms.ModelForm):
